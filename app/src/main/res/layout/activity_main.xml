@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/page_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="40dp"
+        />
+
+    <TextView
+        android:id="@+id/page_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The roastery house"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/page_logo"
+        android:layout_marginTop="40dp"
+        android:textSize="36sp"
+        android:textColor="@color/black"
+        android:textFontWeight="700"
+        />
+
+    <TextView
+        android:id="@+id/page_subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Witaj z powrotem! Zaloguj się"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/page_header"
+        android:layout_marginTop="40dp"
+        android:textSize="36sp"
+        android:textColor="@color/black"
+        android:textFontWeight="600"
+        />
+
+    <EditText
+        android:id="@+id/login_input"
+        android:layout_width="454dp"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@id/page_subheader"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="56dp"
+        android:textSize="24sp"
+        android:hint="Email"
+        />
+
+    <EditText
+        android:id="@+id/password_input"
+        android:layout_width="454dp"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@id/login_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="28dp"
+        android:textSize="24sp"
+        android:hint="Hasło"
+        />
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_button"
+        android:layout_width="324dp"
+        android:layout_height="68dp"
+        style="@style/CustomFormButton"
+        android:backgroundTint="@null"
+        android:background="@drawable/form_button"
+        android:text="Zaloguj się"
+        android:textSize="24sp"
+        android:textColor="@color/functional_buttons_text_color"
+        app:layout_constraintTop_toBottomOf="@id/password_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="43dp"
+        android:textFontWeight="400"
+        />
+    <TextView
+        android:id="@+id/register_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zarejestruj się"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/login_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

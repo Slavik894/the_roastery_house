@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="main_background_color">#F3EACE</color>
+    <color name="form_button_pressed_color">#3f4729</color>
+    <color name="functional_buttons_color">#2D1805</color>
+    <color name="functional_buttons_text_color">#FFE6A7</color>
+    <color name="menu_item_background">#7B6B43</color>
+    <color name="left_right_panels_background">#E1BB80</color>
+</resources>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectOrderTypeActivity">
+
+    <ImageView
+        android:id="@+id/page_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="40dp"
+        />
+
+    <TextView
+        android:id="@+id/page_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The roastery house"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/page_logo"
+        android:layout_marginTop="40dp"
+        android:textSize="36sp"
+        android:textColor="@color/black"
+        android:textFontWeight="700"
+        />
+
+    <TextView
+        android:id="@+id/page_subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Proszę wybrać typ zamówienia"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/page_header"
+        android:layout_marginTop="40dp"
+        android:textSize="36sp"
+        android:textColor="@color/black"
+        android:textFontWeight="600"
+        />
+
+    <FrameLayout
+        android:id="@+id/standard_order_btn"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:gravity="center"
+        android:background="@drawable/form_button"
+        app:layout_constraintTop_toBottomOf="@id/page_subheader"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="74dp"
+        android:layout_marginLeft="243dp" >
+
+        <ImageView
+            android:id="@+id/standard_order_button_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/logo"
+            android:background="@color/functional_buttons_color"
+            app:tint="@color/functional_buttons_text_color"
+            android:scaleType="fitCenter"
+            />
+
+        <TextView
+            android:id="@+id/reaction_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/functional_buttons_color"
+            android:text="Standardowe\n zamówienie"
+            android:textColor="@color/functional_buttons_text_color"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="158dp"
+            />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/special_order_btn"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:gravity="center"
+        android:background="@drawable/form_button"
+        app:layout_constraintTop_toBottomOf="@id/page_subheader"
+        app:layout_constraintRight_toRightOf="parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="74dp"
+        android:layout_marginRight="243dp" >
+
+        <ImageView
+            android:id="@+id/special_order_button_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/special"
+            android:background="@color/functional_buttons_color"
+            android:scaleType="fitCenter"
+            />
+
+        <TextView
+            android:id="@+id/special_order_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/functional_buttons_color"
+            android:text="Zamówinie\n specjalne"
+            android:textColor="@color/functional_buttons_text_color"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="158dp"
+            />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

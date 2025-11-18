@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/settings_page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ustawienia"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/settings_page_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tutaj możesz zmienić swoje dane"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="12dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/settings_page_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zmień swoje imię"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textFontWeight="500"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="80dp"
+        app:layout_constraintTop_toBottomOf="@+id/settings_page_subtitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <EditText
+        android:id="@+id/settings_page_name_input"
+        android:layout_width="354dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_name_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="80dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:hint="Imię"
+        />
+
+    <TextView
+        android:id="@+id/settings_page_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zmień swój email"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textFontWeight="500"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="80dp"
+        app:layout_constraintTop_toBottomOf="@+id/settings_page_name_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <EditText
+        android:id="@+id/settings_page_email_input"
+        android:layout_width="354dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_email_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="80dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:hint="Email"
+        />
+
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+        android:id="@+id/settings_page_vertical_guideline_1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55"
+        />
+
+    <TextView
+        android:id="@+id/settings_page_surname_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zmień swoje nazwisko"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textFontWeight="500"
+        android:layout_marginTop="80dp"
+        app:layout_constraintTop_toBottomOf="@+id/settings_page_subtitle"
+        app:layout_constraintLeft_toLeftOf="@id/settings_page_vertical_guideline_1"
+        />
+    <EditText
+        android:id="@+id/settings_page_surname_input"
+        android:layout_width="354dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_surname_title"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="80dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:hint="Nazwisko"
+        />
+
+    <TextView
+        android:id="@+id/settings_page_password_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zmień swoje hasło"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textFontWeight="500"
+        android:layout_marginTop="80dp"
+        app:layout_constraintTop_toBottomOf="@+id/settings_page_surname_input"
+        app:layout_constraintLeft_toLeftOf="@id/settings_page_vertical_guideline_1"
+        />
+    <EditText
+        android:id="@+id/settings_page_password_input"
+        android:layout_width="354dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_password_title"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="80dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:hint="Hasło"
+        />
+
+    <Button
+        android:id="@+id/settings_screen_cancel_changes_button"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        style="@style/CustomFormButton"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_email_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="48dp"
+        android:layout_marginLeft="80dp"
+        android:text="Odrzuć zmiany"
+        android:textColor="@color/functional_buttons_text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/settings_screen_save_changes_button"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        style="@style/CustomFormButton"
+        app:layout_constraintTop_toBottomOf="@id/settings_page_password_input"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="80dp"
+        android:text="Zapisz zmiany"
+        android:textColor="@color/functional_buttons_text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/settings_screen_log_out_button"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        style="@style/CustomFormButton"
+        app:layout_constraintTop_toBottomOf="@id/settings_screen_cancel_changes_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="48dp"
+        android:text="Wyloguj się"
+        android:textColor="@color/functional_buttons_text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
