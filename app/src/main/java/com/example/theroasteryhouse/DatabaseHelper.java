@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.theroasteryhouse.models.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "coffee_app.db";
     private static final int DATABASE_VERSION = 2;
@@ -210,6 +215,37 @@ public long addAddon(String name, String type, double price) {
     db.close();
     return id;
 }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_USERS,
+                null,
+                null,
+                null,
+                null,
+                null,
+                COLUMN_FIRST_NAME + " ASC"
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+                String firstName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME));
+                String lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL));
+
+                users.add(new User(id, firstName, lastName, email));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return users;
+    }
+
 
 }
 
