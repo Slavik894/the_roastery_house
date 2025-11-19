@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    tools:context=".AdminModeMainScreenActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/left_panel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        android:background="@color/left_right_panels_background"
+        >
+
+        <ImageView
+            android:id="@+id/left_panel_logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/logo"
+            android:background="@color/left_right_panels_background"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tryb\n administratora"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/left_panel_logo"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:background="@color/left_right_panels_background"
+            />
+
+        <Button
+            android:id="@+id/admin_left_panel_users_btn"
+            android:layout_width="256dp"
+            android:layout_height="60dp"
+            style="@style/CustomFormButton"
+            app:layout_constraintTop_toBottomOf="@id/left_panel_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="40dp"
+            android:text="Użytkownicy"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            />
+
+        <Button
+            android:id="@+id/admin_left_panel_menu_items_btn"
+            android:layout_width="256dp"
+            android:layout_height="60dp"
+            style="@style/CustomFormButton"
+            app:layout_constraintTop_toBottomOf="@id/admin_left_panel_users_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="Pozycje menu"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            />
+
+        <Button
+            android:id="@+id/admin_left_panel_ingredients_btn"
+            android:layout_width="256dp"
+            android:layout_height="60dp"
+            style="@style/CustomFormButton"
+            app:layout_constraintTop_toBottomOf="@id/admin_left_panel_menu_items_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="Składniki"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            />
+
+        <Button
+            android:id="@+id/admin_left_panel_finances_btn"
+            android:layout_width="256dp"
+            android:layout_height="60dp"
+            style="@style/CustomFormButton"
+            app:layout_constraintTop_toBottomOf="@id/admin_left_panel_ingredients_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="Finanse"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            />
+
+        <Button
+            android:id="@+id/admin_left_panel_exit_btn"
+            android:layout_width="256dp"
+            android:layout_height="90dp"
+            style="@style/CustomFormButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="24dp"
+            android:text="Wyjdź z trybu\n administratora"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/center_panel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7.5"
+        android:orientation="vertical"
+        android:background="@color/main_background_color"/>
+
+
+
+</LinearLayout>

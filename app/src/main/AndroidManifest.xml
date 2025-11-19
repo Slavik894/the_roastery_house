@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheRoasteryHouse">
         <activity
+            android:name=".AdminModeMainScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminModeStartActivity"
             android:exported="false" />
         <activity

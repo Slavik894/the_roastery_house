@@ -1,5 +1,6 @@
 package com.example.theroasteryhouse;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +29,9 @@ public class AdminModeStartActivity extends AppCompatActivity {
 
         binding.adminStartScreenCancelBtn.setOnClickListener(view -> {
             finish();
+        });
+        binding.adminStartScreenLoginBtn.setOnClickListener(view -> {
+            startActivity(new Intent(this, AdminModeMainScreenActivity.class));
         });
     }
 }
