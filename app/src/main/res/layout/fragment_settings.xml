@@ -150,7 +150,6 @@
         android:layout_marginTop="48dp"
         android:layout_marginLeft="80dp"
         android:text="Odrzuć zmiany"
-        android:textColor="@color/functional_buttons_text_color"
         android:textSize="24sp"
         android:textStyle="bold"
         />
@@ -165,7 +164,6 @@
         android:layout_marginTop="48dp"
         android:layout_marginRight="80dp"
         android:text="Zapisz zmiany"
-        android:textColor="@color/functional_buttons_text_color"
         android:textSize="24sp"
         android:textStyle="bold"
         />
@@ -180,7 +178,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="48dp"
         android:text="Wyloguj się"
-        android:textColor="@color/functional_buttons_text_color"
         android:textSize="24sp"
         android:textStyle="bold"
         />

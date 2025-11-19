@@ -70,7 +70,6 @@
         style="@style/CustomFormButton"
         android:text="Anuluj"
         android:textSize="24sp"
-        android:textColor="@color/functional_buttons_text_color"
         />
 
     <Button
@@ -84,7 +83,6 @@
         style="@style/CustomFormButton"
         android:text="Zaloguj się"
         android:textSize="24sp"
-        android:textColor="@color/functional_buttons_text_color"
         />
 
 

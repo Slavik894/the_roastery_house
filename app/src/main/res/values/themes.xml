@@ -13,6 +13,7 @@
         <item name="cornerRadius">16dp</item>
         <item name="rippleColor">#40000000</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/functional_buttons_text_color</item>
     </style>
 
 
