@@ -10,11 +10,13 @@
     <style name="CustomFormButton" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/form_button</item>
         <item name="backgroundTint">@null</item>
-        <item name="cornerRadius">16dp</item>
+<!--        <item name="cornerRadius">16dp</item>-->
         <item name="rippleColor">#40000000</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/functional_buttons_text_color</item>
     </style>
+
+
 
 
     <style name="Theme.TheRoasteryHouse" parent="Base.Theme.TheRoasteryHouse" />

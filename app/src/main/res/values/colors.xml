@@ -8,4 +8,5 @@
     <color name="functional_buttons_text_color">#FFE6A7</color>
     <color name="menu_item_background">#7B6B43</color>
     <color name="left_right_panels_background">#E1BB80</color>
+    <color name="delete_btn_color">#BF1A1A</color>
 </resources>
