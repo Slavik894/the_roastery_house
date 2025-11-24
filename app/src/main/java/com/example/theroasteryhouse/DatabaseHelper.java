@@ -108,20 +108,28 @@ public long addUser(String firstName, String lastName, String email, String pass
         return result;
 }
 
-public boolean updateUser(int id, String firstName, String lastName, String email, String password) {
+    public boolean updateUserData(int id, String firstName, String lastName, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_FIRST_NAME, firstName);
         values.put(COLUMN_LAST_NAME, lastName);
         values.put(COLUMN_EMAIL, email);
-        values.put(COLUMN_PASSWORD, password);
 
         int rowsAffected = db.update(TABLE_USERS, values, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
         db.close();
         return rowsAffected > 0;
     }
+    public boolean updateUserPassword(int id, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(COLUMN_PASSWORD, newPassword);
+
+        int rowsAffected = db.update(TABLE_USERS, values, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
+        return rowsAffected > 0;
+    }
 
 public boolean userExists(String email) {
     SQLiteDatabase db = this.getReadableDatabase();
@@ -216,7 +224,7 @@ public long addAddon(String name, String type, double price) {
     return id;
 }
 
-    public List<User> getAllUsers() {
+public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -245,6 +253,18 @@ public long addAddon(String name, String type, double price) {
         db.close();
         return users;
     }
+
+    public boolean deleteUser(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(
+                TABLE_USERS,
+                COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)}
+        );
+        db.close();
+        return rowsDeleted > 0;
+    }
+
 
 
 }

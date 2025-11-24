@@ -61,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        binding.registerBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-            startActivity(intent);
-
-        });
 
         binding.pageLogo.setOnClickListener(v -> {
             long currentTime = System.currentTimeMillis();

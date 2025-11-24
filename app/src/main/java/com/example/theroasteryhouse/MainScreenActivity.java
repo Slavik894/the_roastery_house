@@ -84,24 +84,36 @@ public class MainScreenActivity extends AppCompatActivity {
             settingsBinding.settingsPagePasswordInput.setText(currentPassword);
                 });
         settingsBinding.settingsScreenSaveChangesButton.setOnClickListener(v -> {
-            String newName = settingsBinding.settingsPageNameInput.getText().toString();
-            String newSurname = settingsBinding.settingsPageSurnameInput.getText().toString();
-            String newEmail = settingsBinding.settingsPageEmailInput.getText().toString();
-            String newPassword = settingsBinding.settingsPagePasswordInput.getText().toString();
 
-            if(newName.isEmpty() || newSurname.isEmpty() || newEmail.isEmpty() || newPassword.isEmpty()){
+            String newName = settingsBinding.settingsPageNameInput.getText().toString().trim();
+            String newSurname = settingsBinding.settingsPageSurnameInput.getText().toString().trim();
+            String newEmail = settingsBinding.settingsPageEmailInput.getText().toString().trim();
+            String newPassword = settingsBinding.settingsPagePasswordInput.getText().toString().trim();
+
+            if(newName.isEmpty() || newSurname.isEmpty() || newEmail.isEmpty()){
                 Toast.makeText(this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
+                return;
             }
-            boolean isUpdated = db.updateUser(userId, newName, newSurname, newEmail, newPassword);
 
-            if(isUpdated){
+            boolean updateBasic = db.updateUserData(userId, newName, newSurname, newEmail);
+
+            boolean updatePassword = false;
+            if(!newPassword.isEmpty()) {
+                updatePassword = db.updateUserPassword(userId, newPassword);
+                currentPassword = newPassword;
+            }
+
+            if(updateBasic){
                 currentName = newName;
                 currentSurname = newSurname;
                 currentEmail = newEmail;
-                currentPassword = newPassword;
-                Toast.makeText(this, "Zmiany zostały zapisane", Toast.LENGTH_SHORT).show();
             }
 
+            if(updateBasic || updatePassword){
+                Toast.makeText(this, "Zmiany zostały zapisane", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Wystąpił błąd podczas zapisu", Toast.LENGTH_SHORT).show();
+            }
         });
 
         settingsBinding.settingsScreenLogOutButton.setOnClickListener(v -> {
