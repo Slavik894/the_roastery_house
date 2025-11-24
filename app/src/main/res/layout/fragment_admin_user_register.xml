@@ -39,6 +39,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="80dp"
         android:textSize="24sp"
+        android:hint="Imię"
         android:textColor="@color/black"
         />
 
@@ -65,6 +66,8 @@
         android:layout_marginLeft="80dp"
         android:textSize="24sp"
         android:textColor="@color/black"
+        android:hint="Email"
+
         />
 
     <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
@@ -96,6 +99,7 @@
         android:layout_marginRight="80dp"
         android:textSize="24sp"
         android:textColor="@color/black"
+        android:hint="Nazwisko"
         />
 
     <TextView
@@ -120,6 +124,7 @@
         android:layout_marginRight="80dp"
         android:textSize="24sp"
         android:textColor="@color/black"
+        android:hint="Hasło"
         />
     
     <Button
