@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.theroasteryhouse.models.MenuItem;
 import com.example.theroasteryhouse.models.User;
 
 import java.util.ArrayList;
@@ -263,6 +264,47 @@ public List<User> getAllUsers() {
         );
         db.close();
         return rowsDeleted > 0;
+    }
+
+    public List<MenuItem> getAllMenuItems() {
+        List<MenuItem> items = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor drinksCursor = db.query(TABLE_DRINKS, null, null, null, null, null, null);
+        if (drinksCursor.moveToFirst()) {
+            do {
+                int id = drinksCursor.getInt(drinksCursor.getColumnIndexOrThrow(COLUMN_DRINK_ID));
+                String name = drinksCursor.getString(drinksCursor.getColumnIndexOrThrow(COLUMN_DRINK_NAME));
+                items.add(new MenuItem(id, name, "drink"));
+            } while (drinksCursor.moveToNext());
+        }
+        drinksCursor.close();
+
+        Cursor dessertsCursor = db.query(TABLE_DESSERTS, null, null, null, null, null, null);
+        if (dessertsCursor.moveToFirst()) {
+            do {
+                int id = dessertsCursor.getInt(dessertsCursor.getColumnIndexOrThrow(COLUMN_DESSERT_ID));
+                String name = dessertsCursor.getString(dessertsCursor.getColumnIndexOrThrow(COLUMN_DESSERT_NAME));
+
+                items.add(new MenuItem(id, name, "dessert"));
+            } while (dessertsCursor.moveToNext());
+        }
+        dessertsCursor.close();
+        db.close();
+
+        return items;
+    }
+
+    public void deleteDrink(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DRINKS, COLUMN_DRINK_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+    public void deleteDessert(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DESSERTS, COLUMN_DESSERT_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
     }
 
 
