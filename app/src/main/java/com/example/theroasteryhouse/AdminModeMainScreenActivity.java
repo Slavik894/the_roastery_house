@@ -2,19 +2,14 @@ package com.example.theroasteryhouse;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.theroasteryhouse.databinding.ActivityAdminModeMainScreenBinding;
-import com.example.theroasteryhouse.databinding.ActivityAdminModeStartBinding;
 import com.example.theroasteryhouse.databinding.FragmentAdminUserRegisterBinding;
 import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
 import com.example.theroasteryhouse.databinding.FragmentAdminEditUserDataBinding;
@@ -39,7 +34,7 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
 
         showUsersScreen();
         binding.adminLeftPanelUsersBtn.setOnClickListener(v -> showUsersScreen());
-        binding.adminLeftPanelMenuItemsBtn.setOnClickListener(v -> showMenuScreen("Pozycje menu"));
+        binding.adminLeftPanelMenuItemsBtn.setOnClickListener(v -> showMenuItemsScreen());
         binding.adminLeftPanelIngredientsBtn.setOnClickListener(v -> showMenuScreen("Składniki"));
         binding.adminLeftPanelFinancesBtn.setOnClickListener(v -> showMenuScreen("Finanse"));
         binding.adminLeftPanelExitBtn.setOnClickListener(view -> finish());
@@ -190,6 +185,15 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
             ).show();
             showUsersScreen();
         });
+    }
+
+    private void showMenuItemsScreen() {
+        binding.centerPanel.removeAllViews();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.center_panel, new AdminMenuItemsFragment())
+                .commit();
     }
 
 

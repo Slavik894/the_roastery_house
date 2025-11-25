@@ -1,5 +1,6 @@
 package com.example.theroasteryhouse;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +30,7 @@ public class AdminMenuItemsFragment extends Fragment {
         loadMenuItems();
 
         binding.adminModeMenuItemsScreenAddNewItemButton.setOnClickListener(v -> {
-            // Тут буде логіка відкриття екрану додавання (showAddMenuScreen)
-            // Наприклад: ((AdminModeMainScreenActivity)requireActivity()).showAddMenuItemScreen();
+
         });
 
         return binding.getRoot();
