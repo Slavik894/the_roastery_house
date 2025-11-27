@@ -30,7 +30,11 @@ public class AdminMenuItemsFragment extends Fragment {
         loadMenuItems();
 
         binding.adminModeMenuItemsScreenAddNewItemButton.setOnClickListener(v -> {
-
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.center_panel, new AdminAddNewMenuItemFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
 
         return binding.getRoot();

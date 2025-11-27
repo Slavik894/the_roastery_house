@@ -8,13 +8,14 @@
     app:cardBackgroundColor="#795548"> <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:background="@color/menu_item_background"
     >
 
     <TextView
         android:id="@+id/menu_item_name"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,6 +23,8 @@
         android:layout_marginBottom="8dp"
         android:textColor="@color/functional_buttons_text_color"
         android:background="@color/menu_item_background"
+        android:text="TEST"
+        android:textSize="20sp"
         />
 
     <Button
@@ -33,7 +36,7 @@
         app:layout_constraintRight_toRightOf="parent"
         style="@style/CustomFormButton"
         android:text="info"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="4dp"
         />
