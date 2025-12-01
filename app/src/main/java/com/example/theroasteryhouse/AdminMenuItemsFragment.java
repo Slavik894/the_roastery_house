@@ -59,8 +59,13 @@ public class AdminMenuItemsFragment extends Fragment {
 
             @Override
             public void onInfo(MenuItem item) {
-                Toast.makeText(getContext(), "Інфо про: " + item.getName(), Toast.LENGTH_SHORT).show();
-                // Тут можна відкрити діалог редагування
+                AdminEditMenuItemFragment editFragment = AdminEditMenuItemFragment.newInstance(item.getId(), item.getType());
+
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.center_panel, editFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

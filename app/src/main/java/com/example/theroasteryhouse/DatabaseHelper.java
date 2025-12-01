@@ -44,6 +44,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ADDON_TYPE = "type";
     public static final String COLUMN_ADDON_PRICE = "price";
 
+    public static final String TABLE_INGREDIENTS = "ingredients";
+    public static final String COLUMN_INGREDIENT_ID = "id";
+    public static final String COLUMN_INGREDIENT_NAME = "name";
+    public static final String COLUMN_INGREDIENT_INFO = "info";
+    public static final String COLUMN_INGREDIENT_IMAGE_URI = "image_uri";
+
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 }
@@ -83,6 +90,14 @@ public void onCreate(SQLiteDatabase db) {
                 COLUMN_ADDON_PRICE + " REAL" +
                 ")";
         db.execSQL(CREATE_ADDONS_TABLE);
+
+    String CREATE_INGREDIENTS_TABLE = "CREATE TABLE " + TABLE_INGREDIENTS + "(" +
+            COLUMN_INGREDIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            COLUMN_INGREDIENT_NAME + " TEXT NOT NULL," +
+            COLUMN_INGREDIENT_INFO + " TEXT," +
+            COLUMN_INGREDIENT_IMAGE_URI + " TEXT" +
+         ")";
+ db.execSQL(CREATE_INGREDIENTS_TABLE);
 }
 
 
@@ -305,6 +320,84 @@ public List<User> getAllUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_DESSERTS, COLUMN_DESSERT_ID + "=?", new String[]{String.valueOf(id)});
         db.close();
+    }
+
+    public Cursor getDrinkById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_DRINKS, null, COLUMN_DRINK_ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
+    }
+
+    public Cursor getDessertById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_DESSERTS, null, COLUMN_DESSERT_ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
+    }
+
+
+    public boolean updateDrink(int id, String name, String category, double priceS, double priceM, double priceL) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DRINK_NAME, name);
+        values.put(COLUMN_DRINK_CATEGORY, category);
+        values.put(COLUMN_DRINK_PRICE_S, priceS);
+        values.put(COLUMN_DRINK_PRICE_M, priceM);
+        values.put(COLUMN_DRINK_PRICE_L, priceL);
+
+        int result = db.update(TABLE_DRINKS, values, COLUMN_DRINK_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
+        return result > 0;
+    }
+
+    public boolean updateDessert(int id, String name, String category, double price) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DESSERT_NAME, name);
+        values.put(COLUMN_DESSERT_CATEGORY, category);
+        values.put(COLUMN_DESSERT_PRICE, price);
+
+        int result = db.update(TABLE_DESSERTS, values, COLUMN_DESSERT_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
+        return result > 0;
+    }
+
+    public long addIngredient(String name, String info, String imageUri) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_INGREDIENT_NAME, name);
+        values.put(COLUMN_INGREDIENT_INFO, info);
+        values.put(COLUMN_INGREDIENT_IMAGE_URI, imageUri);
+        long id = db.insert(TABLE_INGREDIENTS, null, values);
+        db.close();
+        return id;
+    }
+
+    public Cursor getAllIngredients() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_INGREDIENTS, null, null, null, null, null, null);
+    }
+
+    public Cursor getIngredientById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_INGREDIENTS, null, COLUMN_INGREDIENT_ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
+    }
+
+    public boolean updateIngredient(int id, String name, String info, String imageUri) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_INGREDIENT_NAME, name);
+        values.put(COLUMN_INGREDIENT_INFO, info);
+        if (imageUri != null) {
+            values.put(COLUMN_INGREDIENT_IMAGE_URI, imageUri);
+        }
+        int result = db.update(TABLE_INGREDIENTS, values, COLUMN_INGREDIENT_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
+        return result > 0;
+    }
+
+    public boolean deleteIngredient(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(TABLE_INGREDIENTS, COLUMN_INGREDIENT_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
+        return result > 0;
     }
 
 

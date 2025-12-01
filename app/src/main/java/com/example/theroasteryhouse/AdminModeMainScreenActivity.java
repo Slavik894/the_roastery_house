@@ -1,5 +1,6 @@
 package com.example.theroasteryhouse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -37,7 +38,12 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
         binding.adminLeftPanelMenuItemsBtn.setOnClickListener(v -> showMenuItemsScreen());
         binding.adminLeftPanelIngredientsBtn.setOnClickListener(v -> showMenuScreen("Składniki"));
         binding.adminLeftPanelFinancesBtn.setOnClickListener(v -> showMenuScreen("Finanse"));
-        binding.adminLeftPanelExitBtn.setOnClickListener(view -> finish());
+        binding.adminLeftPanelExitBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(AdminModeMainScreenActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
+        });
     }
 
     private void showMenuScreen(String category) {
