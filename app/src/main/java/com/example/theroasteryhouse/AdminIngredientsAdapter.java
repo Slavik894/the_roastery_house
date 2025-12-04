@@ -27,8 +27,9 @@ public class AdminIngredientsAdapter extends RecyclerView.Adapter<AdminIngredien
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(AdminMenuItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-    }
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        AdminMenuItemBinding binding = AdminMenuItemBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding);  }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {

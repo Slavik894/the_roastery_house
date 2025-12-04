@@ -400,6 +400,41 @@ public List<User> getAllUsers() {
         return result > 0;
     }
 
+    public List<MenuItem> getMenuItemsByCategory(String categoryFilter) {
+        List<MenuItem> items = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        if (categoryFilter.equals("Desery")) {
+            Cursor cursor = db.query(TABLE_DESSERTS, null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_ID));
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_NAME));
+                    items.add(new MenuItem(id, name, "dessert"));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        else {
+            String selection = COLUMN_DRINK_CATEGORY + "=?";
+            String[] selectionArgs = { categoryFilter };
+
+            Cursor cursor = db.query(TABLE_DRINKS, null, selection, selectionArgs, null, null, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DRINK_ID));
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DRINK_NAME));
+                    items.add(new MenuItem(id, name, "drink"));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return items;
+    }
+
 
 
 }

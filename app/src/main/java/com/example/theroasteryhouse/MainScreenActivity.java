@@ -14,12 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.theroasteryhouse.databinding.ActivityMainBinding;
 import com.example.theroasteryhouse.databinding.ActivityMainScreenBinding;
 import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
 import com.example.theroasteryhouse.databinding.FragmentSettingsBinding;
+import com.example.theroasteryhouse.models.MenuItem;
+
+import java.util.List;
 
 public class MainScreenActivity extends AppCompatActivity {
     private ActivityMainScreenBinding binding;
@@ -59,6 +63,18 @@ public class MainScreenActivity extends AppCompatActivity {
         binding.centerPanel.removeAllViews();
         binding.centerPanel.addView(menuBinding.getRoot());
         menuBinding.categoryTitle.setText(category);
+
+        menuBinding.menuRecycler.setLayoutManager(new GridLayoutManager(this, 3));
+
+        List<MenuItem> items = db.getMenuItemsByCategory(category);
+
+        StandardMenuAdapter adapter = new StandardMenuAdapter(items, item -> {
+
+            Toast.makeText(this, "Dodano do zamówienia: " + item.getName(), Toast.LENGTH_SHORT).show();
+
+        });
+
+        menuBinding.menuRecycler.setAdapter(adapter);
 
         LinearLayout.LayoutParams centerPanelParams =
                 (LinearLayout.LayoutParams) binding.centerPanel.getLayoutParams();
