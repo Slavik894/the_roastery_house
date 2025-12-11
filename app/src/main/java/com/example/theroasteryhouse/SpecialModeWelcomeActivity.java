@@ -9,38 +9,29 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.theroasteryhouse.databinding.ActivitySelectOrderTypeBinding;
+import com.example.theroasteryhouse.databinding.ActivitySpecialModeWelcomeBinding;
 
-public class SelectOrderTypeActivity extends AppCompatActivity {
-    private ActivitySelectOrderTypeBinding binding;
-    private int userId;
+public class SpecialModeWelcomeActivity extends AppCompatActivity {
+    private ActivitySpecialModeWelcomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySelectOrderTypeBinding.inflate(getLayoutInflater());
+        binding = ActivitySpecialModeWelcomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         EdgeToEdge.enable(this);
-        userId = getIntent().getIntExtra("userId", -1);
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        binding.standardOrderBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainScreenActivity.class);
-            intent.putExtra("userId", userId);
-            startActivity(intent);
+
+        binding.welcomePageCancelBtn.setOnClickListener(v -> {
+            finish();
+        });
+        binding.welcomePageStartBtn.setOnClickListener(v -> {
 
         });
-        binding.specialOrderBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SpecialModeWelcomeActivity.class);
-            intent.putExtra("userId", userId);
-            startActivity(intent);
-        });
     }
+}
 
-
-
-    }
