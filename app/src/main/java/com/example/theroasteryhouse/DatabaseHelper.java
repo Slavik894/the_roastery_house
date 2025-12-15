@@ -49,6 +49,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INGREDIENT_NAME = "name";
     public static final String COLUMN_INGREDIENT_INFO = "info";
     public static final String COLUMN_INGREDIENT_IMAGE_URI = "image_uri";
+    public static final String COLUMN_INGREDIENT_TYPE = "type";
+    public static final String COLUMN_INGREDIENT_PRICE = "price";
 
 
     public DatabaseHelper(Context context) {
@@ -95,7 +97,9 @@ public void onCreate(SQLiteDatabase db) {
             COLUMN_INGREDIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_INGREDIENT_NAME + " TEXT NOT NULL," +
             COLUMN_INGREDIENT_INFO + " TEXT," +
-            COLUMN_INGREDIENT_IMAGE_URI + " TEXT" +
+            COLUMN_INGREDIENT_IMAGE_URI + " TEXT," +
+            COLUMN_INGREDIENT_TYPE + " TEXT," +
+            COLUMN_INGREDIENT_PRICE + " REAL" +
          ")";
  db.execSQL(CREATE_INGREDIENTS_TABLE);
 }
@@ -106,6 +110,7 @@ public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DRINKS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DESSERTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADDONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
         onCreate(db);
 
 }
@@ -359,12 +364,14 @@ public List<User> getAllUsers() {
         return result > 0;
     }
 
-    public long addIngredient(String name, String info, String imageUri) {
+    public long addIngredient(String name, String info, String imageUri, String type, double price) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_INGREDIENT_NAME, name);
         values.put(COLUMN_INGREDIENT_INFO, info);
         values.put(COLUMN_INGREDIENT_IMAGE_URI, imageUri);
+        values.put(COLUMN_INGREDIENT_TYPE, type);
+        values.put(COLUMN_INGREDIENT_PRICE, price);
         long id = db.insert(TABLE_INGREDIENTS, null, values);
         db.close();
         return id;
@@ -379,8 +386,33 @@ public List<User> getAllUsers() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(TABLE_INGREDIENTS, null, COLUMN_INGREDIENT_ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
     }
+    public List<com.example.theroasteryhouse.models.Ingredient> getIngredientsByType(String type) {
+        List<com.example.theroasteryhouse.models.Ingredient> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
 
-    public boolean updateIngredient(int id, String name, String info, String imageUri) {
+        Cursor cursor = db.query(TABLE_INGREDIENTS, null, COLUMN_INGREDIENT_TYPE + "=?", new String[]{type}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_NAME));
+                String info = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_INFO));
+                String imageUri = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_IMAGE_URI));
+
+                // --- Читаємо нові поля ---
+                String itemType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_TYPE));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_PRICE));
+
+                // Використовуємо оновлений конструктор
+                list.add(new com.example.theroasteryhouse.models.Ingredient(id, name, info, imageUri, itemType, price));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+    public boolean updateIngredient(int id, String name, String info, String imageUri, String type, double price) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_INGREDIENT_NAME, name);

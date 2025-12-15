@@ -30,7 +30,8 @@ public class SpecialModeWelcomeActivity extends AppCompatActivity {
             finish();
         });
         binding.welcomePageStartBtn.setOnClickListener(v -> {
-
+            Intent intent = new Intent(SpecialModeWelcomeActivity.this, SpecialModeMainScreenActivity.class);
+            startActivity(intent);
         });
     }
 }

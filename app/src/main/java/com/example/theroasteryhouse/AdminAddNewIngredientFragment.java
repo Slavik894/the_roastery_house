@@ -1,6 +1,7 @@
 package com.example.theroasteryhouse;
 
 import android.app.Activity;
+import android.widget.ArrayAdapter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +43,11 @@ public class AdminAddNewIngredientFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAdminAddNewIngredientBinding.inflate(inflater, container, false);
         db = new DatabaseHelper(requireContext());
+
+        String[] ingredientTypes = {"Ziarna (beans)", "Baza (base)", "Mleko (milk)", "Dodatek (additive)"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, ingredientTypes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.adminAddNewIngredientTypeSpinner.setAdapter(adapter);
 
         binding.adminAddNewIngredientImage.setOnClickListener(v -> openGallery());
         binding.adminAddNewIngredientSaveBtn.setOnClickListener(v -> saveIngredient());

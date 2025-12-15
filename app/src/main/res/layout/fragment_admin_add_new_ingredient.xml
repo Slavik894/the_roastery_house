@@ -65,10 +65,31 @@
         />
 
     <TextView
-        android:id="@+id/admin_add_new_ingredient_info_title"
+        android:id="@+id/admin_add_new_ingredient_type_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/admin_add_new_ingredient_name_title"
+        app:layout_constraintLeft_toLeftOf="@id/admin_add_new_ingredient_vertical_line_2"
+        android:layout_marginTop="26dp"
+        android:text="Typ składnika: "
+        android:textSize="26sp"
+        android:textStyle="bold"
+        />
+    <Spinner
+        android:id="@+id/admin_add_new_ingredient_type_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/admin_add_new_ingredient_name_input"
+        app:layout_constraintLeft_toRightOf="@id/admin_add_new_ingredient_type_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/admin_add_new_ingredient_type_title"
+        />
+
+
+    <TextView
+        android:id="@+id/admin_add_new_ingredient_info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/admin_add_new_ingredient_type_title"
         app:layout_constraintLeft_toLeftOf="@id/admin_add_new_ingredient_vertical_line_2"
         android:layout_marginTop="26dp"
         android:text="Info: "
@@ -80,8 +101,7 @@
         android:id="@+id/admin_add_ingredient_info_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@id/admin_add_new_ingredient_name_input"
+        app:layout_constraintTop_toBottomOf="@id/admin_add_new_ingredient_type_title"
         app:layout_constraintLeft_toRightOf="@id/admin_add_new_ingredient_info_title"
         app:layout_constraintRight_toRightOf="@id/admin_add_new_ingredient_vertical_line_3"
         android:layout_marginTop="20dp"
@@ -90,11 +110,9 @@
         android:background="@drawable/form_button"
         android:backgroundTint="#F5F5DC"
         android:padding="10dp"
-
         android:hint="Opis składnika..."
         android:textColor="@color/black"
         android:textSize="20sp"
-
         android:inputType="textMultiLine|textCapSentences"
         android:gravity="top|start"
         android:minLines="10"

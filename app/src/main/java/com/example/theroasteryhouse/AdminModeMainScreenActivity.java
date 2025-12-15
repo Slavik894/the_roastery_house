@@ -37,7 +37,6 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
         binding.adminLeftPanelUsersBtn.setOnClickListener(v -> showUsersScreen());
         binding.adminLeftPanelMenuItemsBtn.setOnClickListener(v -> showMenuItemsScreen());
         binding.adminLeftPanelIngredientsBtn.setOnClickListener(v -> showIngredientsScreen());
-        binding.adminLeftPanelFinancesBtn.setOnClickListener(v -> showMenuScreen("Finanse"));
         binding.adminLeftPanelExitBtn.setOnClickListener(view -> {
             Intent intent = new Intent(AdminModeMainScreenActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
