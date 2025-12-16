@@ -1,13 +1,13 @@
 package com.example.theroasteryhouse;
 
 import android.app.Activity;
-import android.widget.ArrayAdapter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -26,7 +26,6 @@ public class AdminAddNewIngredientFragment extends Fragment {
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     selectedImageUri = result.getData().getData();
-
                     try {
                         requireContext().getContentResolver().takePersistableUriPermission(
                                 selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -44,16 +43,21 @@ public class AdminAddNewIngredientFragment extends Fragment {
         binding = FragmentAdminAddNewIngredientBinding.inflate(inflater, container, false);
         db = new DatabaseHelper(requireContext());
 
-        String[] ingredientTypes = {"Ziarna (beans)", "Baza (base)", "Mleko (milk)", "Dodatek (additive)"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, ingredientTypes);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.adminAddNewIngredientTypeSpinner.setAdapter(adapter);
+        setupTypeSpinner();
 
         binding.adminAddNewIngredientImage.setOnClickListener(v -> openGallery());
         binding.adminAddNewIngredientSaveBtn.setOnClickListener(v -> saveIngredient());
         binding.adminAddNewIngredientCancelBtn.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         return binding.getRoot();
+    }
+
+    private void setupTypeSpinner() {
+        String[] ingredientTypes = {"Ziarna", "Baza kawowa", "Mleko", "Dodatek"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, ingredientTypes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.adminAddNewIngredientTypeSpinner.setAdapter(adapter);
     }
 
     private void openGallery() {
@@ -69,14 +73,50 @@ public class AdminAddNewIngredientFragment extends Fragment {
         String uriString = (selectedImageUri != null) ? selectedImageUri.toString() : "";
 
         if (name.isEmpty()) {
-            Toast.makeText(getContext(), "Wpisz nazwę", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Wpisz nazwę składnika", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        long id = db.addIngredient(name, info, uriString);
+        String priceStr = binding.adminAddNewIngredientPriceInput.getText().toString().trim();
+        double price = 0.0;
+        if (!priceStr.isEmpty()) {
+            try {
+                price = Double.parseDouble(priceStr.replace(",", "."));
+            } catch (NumberFormatException e) {
+                Toast.makeText(getContext(), "Nieprawidłowa cena", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        int selectedPosition = binding.adminAddNewIngredientTypeSpinner.getSelectedItemPosition();
+        String typeDB;
+
+        switch (selectedPosition) {
+            case 0:
+                typeDB = "beans";
+                break;
+            case 1:
+                typeDB = "base";
+                break;
+            case 2:
+                typeDB = "milk";
+                break;
+            case 3:
+                typeDB = "additive";
+                break;
+            default:
+                typeDB = "additive";
+                break;
+        }
+
+
+        long id = db.addIngredient(name, info, uriString, typeDB, price);
+
         if (id != -1) {
-            Toast.makeText(getContext(), "Składnik został dodany", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Składnik dodany pomyślnie!", Toast.LENGTH_SHORT).show();
             getParentFragmentManager().popBackStack();
+        } else {
+            Toast.makeText(getContext(), "Błąd zapisu do bazy danych", Toast.LENGTH_SHORT).show();
         }
     }
 }

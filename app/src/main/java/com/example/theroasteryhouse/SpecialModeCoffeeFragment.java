@@ -75,10 +75,6 @@ public class SpecialModeCoffeeFragment extends Fragment {
         List<Ingredient> list = new ArrayList<>();
         // list = db.getIngredientsByType(category); <--- Це треба реалізувати в БД
 
-        // ТИМЧАСОВИЙ КОД ДЛЯ ТЕСТУ (ВИДАЛИТИ ПОТІМ):
-        list.add(new Ingredient(1, "Test " + category, "Info", ""));
-        list.add(new Ingredient(2, "Test 2", "Info", ""));
-        list.add(new Ingredient(3, "Test 3", "Info", ""));
         // ------------------------------------------
 
         SpecialIngredientsAdapter adapter = new SpecialIngredientsAdapter(list, new SpecialIngredientsAdapter.OnItemActionListener() {

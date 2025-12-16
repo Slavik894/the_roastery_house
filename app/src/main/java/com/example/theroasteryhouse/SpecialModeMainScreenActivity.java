@@ -26,6 +26,13 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        if (savedInstanceState == null) {
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.sp_mode_center_panel, new SpecialModeCoffeeFragment())
+                    .commit();
+
+        }
 
         binding.spModeLeftPanelExitBtn.setOnClickListener(v -> {
             finish();

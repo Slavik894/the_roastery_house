@@ -17,7 +17,7 @@
             android:id="@+id/sp_mode_cofee_fragment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Special mode\nCoffee"
+            android:text="Tryb specjalny\nKawa"
             android:textAlignment="center"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose the coffee beans:"
+            android:text="Wybierz ziarna kawy:"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -53,7 +53,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose the drink base:"
+            android:text="Wybierz bazę napoju:"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose the water volume:"
+            android:text="Wybierz objętość wody:"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -99,7 +99,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose the milk volume:"
+            android:text="Wybierz objętość mleka:"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -122,7 +122,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose the kind of milk:"
+            android:text="Wybierz rodzaj mleka:"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -145,7 +145,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Do You prefer a milk foam or just still milk?"
+            android:text="Wolisz piankę mleczną czy zwykłe mleko?"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -163,21 +163,21 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Milk foam"
+                android:text="Spienione mleko"
                 android:textSize="16sp"
                 android:layout_marginEnd="20dp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Still milk"
+                android:text="Zwykle mleko"
                 android:textSize="16sp" />
         </RadioGroup>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose another additives:"
+            android:text="Wybierz inne dodatki:"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"

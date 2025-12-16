@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "coffee_app.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public static final String TABLE_USERS = "users";
 
@@ -180,15 +180,15 @@ public boolean checkUserCredentials(String email, String password) {
 
 public int getUserId(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cusror = db.query(TABLE_USERS, new String[]{COLUMN_ID},
+        Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID},
                 COLUMN_EMAIL + "=? AND " + COLUMN_PASSWORD + " =?",
                 new String[]{email, password}, null, null, null);
 
         int id = -1;
-        if (cusror.moveToFirst()) {
-            id = cusror.getInt(0);
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(0);
         }
-        cusror.close();
+        cursor.close();
         db.close();
         return id;
 }
@@ -399,11 +399,9 @@ public List<User> getAllUsers() {
                 String info = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_INFO));
                 String imageUri = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_IMAGE_URI));
 
-                // --- Читаємо нові поля ---
                 String itemType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_TYPE));
                 double price = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENT_PRICE));
 
-                // Використовуємо оновлений конструктор
                 list.add(new com.example.theroasteryhouse.models.Ingredient(id, name, info, imageUri, itemType, price));
             } while (cursor.moveToNext());
         }

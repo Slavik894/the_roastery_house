@@ -9,7 +9,7 @@ public class Ingredient {
     private double price;
 
 
-    public Ingredient(int id, String name, String info, String imageUri) {
+    public Ingredient(int id, String name, String info, String imageUri, String type, double price) {
         this.id = id;
         this.name = name;
         this.info = info;

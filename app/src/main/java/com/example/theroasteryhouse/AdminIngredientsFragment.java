@@ -47,7 +47,9 @@ public class AdminIngredientsFragment extends Fragment {
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_NAME));
                 String info = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_INFO));
                 String uri = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_IMAGE_URI));
-                list.add(new Ingredient(id, name, info, uri));
+                String type = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_TYPE));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_PRICE));
+                list.add(new Ingredient(id, name, info, uri, type, price));
             } while (cursor.moveToNext());
         }
         cursor.close();
