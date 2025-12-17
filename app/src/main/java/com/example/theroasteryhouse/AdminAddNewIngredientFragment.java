@@ -53,7 +53,7 @@ public class AdminAddNewIngredientFragment extends Fragment {
     }
 
     private void setupTypeSpinner() {
-        String[] ingredientTypes = {"Ziarna", "Baza kawowa", "Mleko", "Dodatek"};
+        String[] ingredientTypes = {"Ziarna", "Baza kawowa", "Mleko", "Dodatek do kawy", "Liście herbaty", "Dodatek do herbaty"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, ingredientTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -103,6 +103,12 @@ public class AdminAddNewIngredientFragment extends Fragment {
                 break;
             case 3:
                 typeDB = "additive";
+                break;
+            case 4:
+                typeDB = "tea_leaves";
+                break;
+            case 5:
+                typeDB = "tea_additive";
                 break;
             default:
                 typeDB = "additive";

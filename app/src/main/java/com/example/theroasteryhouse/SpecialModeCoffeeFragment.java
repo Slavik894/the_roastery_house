@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.theroasteryhouse.databinding.SpModeCofeeFragmentBinding;
 import com.example.theroasteryhouse.models.Ingredient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpecialModeCoffeeFragment extends Fragment {
@@ -22,83 +21,80 @@ public class SpecialModeCoffeeFragment extends Fragment {
     private SpModeCofeeFragmentBinding binding;
     private DatabaseHelper db;
 
-    // Змінні для зберігання вибору користувача
     private Ingredient selectedBean;
     private Ingredient selectedBase;
     private Ingredient selectedMilkType;
     private Ingredient selectedAdditive;
+
     private int waterVolume = 0;
     private int milkVolume = 0;
-    private String milkTexture = "Still milk";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SpModeCofeeFragmentBinding.inflate(inflater, container, false);
         db = new DatabaseHelper(requireContext());
 
-        // 1. Налаштовуємо списки
-        setupRecyclerView(binding.spModeCofeeRecyclerBeans, "beans");
-        setupRecyclerView(binding.spModeCoffeeRecyclerDrinkBase, "base");
-        setupRecyclerView(binding.spModeCoffeeRecyclerMilkType, "milk");
-        setupRecyclerView(binding.spModeCoffeeRecyclerAdditives, "additive");
 
-        // 2. Налаштовуємо слайдери
-        binding.spModeCoffeeWaterSlider.addOnChangeListener((slider, value, fromUser) -> {
-            waterVolume = (int) value;
-            // Тут можна оновити якийсь TextView, якщо хочеш показати число
-        });
+        setupSection(binding.spModeCofeeRecyclerBeans, "beans");
+        setupSection(binding.spModeCoffeeRecyclerDrinkBase, "base");
+        setupSection(binding.spModeCoffeeRecyclerMilkType, "milk");
+        setupSection(binding.spModeCoffeeRecyclerAdditives, "additive");
 
-        binding.spModeCoffeeMilkSlider.addOnChangeListener((slider, value, fromUser) -> {
-            milkVolume = (int) value;
-        });
-
-        // 3. Radio Group (Пінка чи ні)
-        binding.spModeCoffeeMilkTeksture.setOnCheckedChangeListener((group, checkedId) -> {
-            // Тут перевіряємо, який ID вибрано.
-            // Потрібно дати ID радіокнопкам в XML, наприклад @+id/rb_foam і @+id/rb_still
-            /*
-            if (checkedId == R.id.rb_foam) milkTexture = "Foam";
-            else milkTexture = "Still";
-            */
-        });
+        setupSliders();
 
         return binding.getRoot();
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView, String category) {
-        // Встановлюємо сітку по 3 елементи
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    private void setupSection(RecyclerView recyclerView, String dbType) {
+        List<Ingredient> ingredients = db.getIngredientsByType(dbType);
 
-        // Отримуємо дані з БД (Тут треба буде допрацювати логіку фільтрації)
-        // Наприклад, створити в DatabaseHelper метод getIngredientsByType(String type)
-        // Поки що завантажимо всі для прикладу:
-        List<Ingredient> list = new ArrayList<>();
-        // list = db.getIngredientsByType(category); <--- Це треба реалізувати в БД
-
-        // ------------------------------------------
-
-        SpecialIngredientsAdapter adapter = new SpecialIngredientsAdapter(list, new SpecialIngredientsAdapter.OnItemActionListener() {
+        SpecialIngredientsAdapter adapter = new SpecialIngredientsAdapter(ingredients, new SpecialIngredientsAdapter.OnItemActionListener() {
             @Override
             public void onInfo(Ingredient item) {
-                // Відкрити діалог з інформацією
-                Toast.makeText(getContext(), "Info: " + item.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), item.getInfo(), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onChoose(Ingredient item) {
-                // Зберігаємо вибір залежно від категорії
-                switch (category) {
-                    case "beans": selectedBean = item; break;
-                    case "base": selectedBase = item; break;
-                    case "milk": selectedMilkType = item; break;
-                    case "additive": selectedAdditive = item; break;
-                }
+                saveSelection(dbType, item);
 
-                // Тут можна викликати метод Activity, щоб оновити праву панель!
-                // ((SpecialModeActivity) requireActivity()).updateRightPanel(...);
+                // Тут можна додати логіку оновлення Правої Панелі
+                // updateRightPanel();
             }
         });
-
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setAdapter(adapter);
+    }
+
+    private void saveSelection(String type, Ingredient item) {
+        switch (type) {
+            case "beans":
+                selectedBean = item;
+
+                break;
+            case "base":
+                selectedBase = item;
+                break;
+            case "milk":
+                selectedMilkType = item;
+                break;
+            case "additive":
+                selectedAdditive = item;
+                break;
+        }
+    }
+
+    private void setupSliders() {
+        // Слайдер води
+        if (binding.spModeCoffeeWaterSlider != null) {
+            binding.spModeCoffeeWaterSlider.addOnChangeListener((slider, value, fromUser) -> {
+                waterVolume = (int) value;
+            });
+        }
+        if (binding.spModeCoffeeMilkSlider != null) {
+            binding.spModeCoffeeMilkSlider.addOnChangeListener((slider, value, fromUser) -> {
+                milkVolume = (int) value;
+            });
+        }
     }
 }
