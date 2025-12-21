@@ -1,14 +1,19 @@
 package com.example.theroasteryhouse;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -195,20 +200,23 @@ public class MainScreenActivity extends AppCompatActivity {
         }
 
         private void showSizeDialog(MenuItem item) {
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             View view = getLayoutInflater().inflate(R.layout.dialog_choose_size, null);
             builder.setView(view);
 
-            android.app.AlertDialog dialog = builder.create();
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
             if (dialog.getWindow() != null) {
-                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             }
 
-            TextView title = view.findViewById(R.id.dialog_title);
-            android.widget.Button btnS = view.findViewById(R.id.btn_size_s);
-            android.widget.Button btnM = view.findViewById(R.id.btn_size_m);
-            android.widget.Button btnL = view.findViewById(R.id.btn_size_l);
-            android.widget.Button btnCancel = view.findViewById(R.id.btn_cancel);
+
+            TextView title = dialog.findViewById(R.id.dialog_title);
+            android.widget.Button btnS = dialog.findViewById(R.id.btn_size_s);
+            android.widget.Button btnM = dialog.findViewById(R.id.btn_size_m);
+            android.widget.Button btnL = dialog.findViewById(R.id.btn_size_l);
+            android.widget.Button btnCancel = dialog.findViewById(R.id.btn_cancel);
 
             title.setText(item.getName());
 
@@ -234,6 +242,10 @@ public class MainScreenActivity extends AppCompatActivity {
             btnCancel.setOnClickListener(v -> dialog.dismiss());
 
             dialog.show();
+            if (dialog.getWindow() != null) {
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            }
+
         }
 
         private void addToOrderPanel(com.example.theroasteryhouse.models.OrderItem item) {
@@ -244,6 +256,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
         private void updateTotalText() {
             if (totalPrice < 0) totalPrice = 0;
-            binding.rightPanelAmountNumber.setText(String.format(" %.2f zł", totalPrice));
+            binding.rightPanelAmountNumber.setText(String.format("%.2f zł", totalPrice));
         }
 }

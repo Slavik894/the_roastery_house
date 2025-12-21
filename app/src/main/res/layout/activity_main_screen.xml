@@ -179,7 +179,7 @@
             android:id="@+id/right_panel_amount_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEST"
+            android:text=""
             android:textSize="26sp"
             android:textStyle="bold"
             android:background="@color/left_right_panels_background"

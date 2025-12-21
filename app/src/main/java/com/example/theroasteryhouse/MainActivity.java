@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
             if (isValid) {
                 int userId = db.getUserId(email, password);
                 if (userId != -1) {
-                    Toast.makeText(this, "Zalogowano", Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent(this, SelectOrderTypeActivity.class);
                     intent.putExtra("userId", userId);
                     startActivity(intent);
@@ -72,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 clickCounter++;
             }
             if(clickCounter == 5) {
-                Toast.makeText(this, "Witaj w trybie admina!", Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(getApplicationContext(), AdminModeStartActivity.class);
                 startActivity(intent);
             }
