@@ -9,4 +9,5 @@
     <color name="menu_item_background">#7B6B43</color>
     <color name="left_right_panels_background">#E1BB80</color>
     <color name="delete_btn_color">#BF1A1A</color>
+    <color name="red">#D32F2F</color>
 </resources>

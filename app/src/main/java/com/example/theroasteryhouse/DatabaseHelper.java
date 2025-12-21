@@ -295,7 +295,7 @@ public List<User> getAllUsers() {
             do {
                 int id = drinksCursor.getInt(drinksCursor.getColumnIndexOrThrow(COLUMN_DRINK_ID));
                 String name = drinksCursor.getString(drinksCursor.getColumnIndexOrThrow(COLUMN_DRINK_NAME));
-                items.add(new MenuItem(id, name, "drink"));
+                items.add(new MenuItem(id, name, "drink", 0.0, 0.0, 0.0));
             } while (drinksCursor.moveToNext());
         }
         drinksCursor.close();
@@ -306,7 +306,7 @@ public List<User> getAllUsers() {
                 int id = dessertsCursor.getInt(dessertsCursor.getColumnIndexOrThrow(COLUMN_DESSERT_ID));
                 String name = dessertsCursor.getString(dessertsCursor.getColumnIndexOrThrow(COLUMN_DESSERT_NAME));
 
-                items.add(new MenuItem(id, name, "dessert"));
+                items.add(new MenuItem(id, name, "dessert", 0.0));
             } while (dessertsCursor.moveToNext());
         }
         dessertsCursor.close();
@@ -415,6 +415,10 @@ public List<User> getAllUsers() {
         ContentValues values = new ContentValues();
         values.put(COLUMN_INGREDIENT_NAME, name);
         values.put(COLUMN_INGREDIENT_INFO, info);
+
+        values.put(COLUMN_INGREDIENT_TYPE, type);
+        values.put(COLUMN_INGREDIENT_PRICE, price);
+
         if (imageUri != null) {
             values.put(COLUMN_INGREDIENT_IMAGE_URI, imageUri);
         }
@@ -440,7 +444,8 @@ public List<User> getAllUsers() {
                 do {
                     int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_ID));
                     String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_NAME));
-                    items.add(new MenuItem(id, name, "dessert"));
+                    double price = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_PRICE));
+                    items.add(new MenuItem(id, name, "dessert", price));
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -455,7 +460,11 @@ public List<User> getAllUsers() {
                 do {
                     int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DRINK_ID));
                     String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DRINK_NAME));
-                    items.add(new MenuItem(id, name, "drink"));
+
+                    double priceS = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DRINK_PRICE_S));
+                    double priceM = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DRINK_PRICE_M));
+                    double priceL = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DRINK_PRICE_L));
+                    items.add(new MenuItem(id, name, "drink", priceS, priceM, priceL));
                 } while (cursor.moveToNext());
             }
             cursor.close();

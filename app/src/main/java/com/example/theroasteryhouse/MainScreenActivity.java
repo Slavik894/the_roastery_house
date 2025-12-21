@@ -2,7 +2,6 @@ package com.example.theroasteryhouse;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,23 +10,21 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.theroasteryhouse.databinding.ActivityMainBinding;
 import com.example.theroasteryhouse.databinding.ActivityMainScreenBinding;
 import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
 import com.example.theroasteryhouse.databinding.FragmentSettingsBinding;
 import com.example.theroasteryhouse.models.MenuItem;
+import com.example.theroasteryhouse.models.OrderItem;
 
 import java.util.List;
 
 public class MainScreenActivity extends AppCompatActivity {
     private ActivityMainScreenBinding binding;
     private DatabaseHelper db;
+    private OrderAdapter orderAdapter;
+    private double totalPrice = 0.0;
 
     private String currentName;
     private String currentSurname;
@@ -47,6 +44,7 @@ public class MainScreenActivity extends AppCompatActivity {
         userId = getIntent().getIntExtra("userId", -1);
         loadUserData();
 
+        setupOrderPanel();
         showMenuScreen("Kawa");
 
         binding.leftPanelCoffeeBtn.setOnClickListener(v -> showMenuScreen("Kawa"));
@@ -69,9 +67,7 @@ public class MainScreenActivity extends AppCompatActivity {
         List<MenuItem> items = db.getMenuItemsByCategory(category);
 
         StandardMenuAdapter adapter = new StandardMenuAdapter(items, item -> {
-
-            Toast.makeText(this, "Dodano do zamówienia: " + item.getName(), Toast.LENGTH_SHORT).show();
-
+            onMenuItemClicked(item);
         });
 
         menuBinding.menuRecycler.setAdapter(adapter);
@@ -176,4 +172,78 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
     }
+
+    private void setupOrderPanel() {
+
+        orderAdapter = new OrderAdapter(position -> {
+            OrderItem item = orderAdapter.getItems().get(position);
+            totalPrice -= item.getPrice();
+            orderAdapter.removeItem(position);
+            updateTotalText();
+        });
+        binding.rightPanelOrderRecycler.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+        binding.rightPanelOrderRecycler.setAdapter(orderAdapter);
+    }
+        private void onMenuItemClicked(MenuItem item) {
+            if ("dessert".equals(item.getType()) || "additive".equals(item.getType())) {
+                OrderItem orderItem =
+                        new OrderItem(item.getName(), "", item.getPriceSingle());
+                addToOrderPanel(orderItem);
+            } else {
+                showSizeDialog(item);
+            }
+        }
+
+        private void showSizeDialog(MenuItem item) {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            View view = getLayoutInflater().inflate(R.layout.dialog_choose_size, null);
+            builder.setView(view);
+
+            android.app.AlertDialog dialog = builder.create();
+            if (dialog.getWindow() != null) {
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            }
+
+            TextView title = view.findViewById(R.id.dialog_title);
+            android.widget.Button btnS = view.findViewById(R.id.btn_size_s);
+            android.widget.Button btnM = view.findViewById(R.id.btn_size_m);
+            android.widget.Button btnL = view.findViewById(R.id.btn_size_l);
+            android.widget.Button btnCancel = view.findViewById(R.id.btn_cancel);
+
+            title.setText(item.getName());
+
+            btnS.setText(String.format("Small - %.2f zł", item.getPriceS()));
+            btnM.setText(String.format("Medium - %.2f zł", item.getPriceM()));
+            btnL.setText(String.format("Large - %.2f zł", item.getPriceL()));
+
+            btnS.setOnClickListener(v -> {
+                addToOrderPanel(new OrderItem(item.getName(), "S", item.getPriceS()));
+                dialog.dismiss();
+            });
+
+            btnM.setOnClickListener(v -> {
+                addToOrderPanel(new com.example.theroasteryhouse.models.OrderItem(item.getName(), "M", item.getPriceM()));
+                dialog.dismiss();
+            });
+
+            btnL.setOnClickListener(v -> {
+                addToOrderPanel(new com.example.theroasteryhouse.models.OrderItem(item.getName(), "L", item.getPriceL()));
+                dialog.dismiss();
+            });
+
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+            dialog.show();
+        }
+
+        private void addToOrderPanel(com.example.theroasteryhouse.models.OrderItem item) {
+            orderAdapter.addItem(item);
+            totalPrice += item.getPrice();
+            updateTotalText();
+        }
+
+        private void updateTotalText() {
+            if (totalPrice < 0) totalPrice = 0;
+            binding.rightPanelAmountNumber.setText(String.format(" %.2f zł", totalPrice));
+        }
 }

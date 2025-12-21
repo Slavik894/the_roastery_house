@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_marginBottom="8dp"
+    android:background="@color/left_right_panels_background"
+    >
+
+    <TextView
+        android:id="@+id/order_item_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Nazwa produktu"
+        android:textColor="#3E2723"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@color/left_right_panels_background"
+        />
+
+    <TextView
+        android:id="@+id/order_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.00 zł"
+        android:textColor="#3E2723"
+        android:textSize="18sp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/left_right_panels_background"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_delete_item"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/delete"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="@color/red"
+        android:contentDescription="Usuń element" />
+
+</LinearLayout>
