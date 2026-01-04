@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/sp_mode_ingredient_info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp"
+        android:text="Informacje o składnikach"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/sp_mode_ingredient_info_vertical_line_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1"
+        />
+
+    <ImageView
+        android:id="@+id/sp_mode_ingredient_info_image"
+        android:layout_width="207dp"
+        android:layout_height="207dp"
+        app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_info_title"
+        app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_info_vertical_line_1"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="@color/menu_item_background"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/sp_mode_ingredient_vertical_line_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4"
+        />
+
+    <TextView
+        android:id="@+id/sp_mode_ingredient_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_info_title"
+        app:layout_constraintLeft_toLeftOf="@id/sp_mode_ingredient_vertical_line_2"
+        android:layout_marginTop="80dp"
+        android:text="Nazwa: "
+        android:textSize="26sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/sp_mode_ingredient_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/sp_mode_ingredient_name_title"
+        app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_name_title"
+        android:layout_marginLeft="20dp"
+        android:textSize="24sp"
+        android:text="TEST"
+        />
+
+    <TextView
+        android:id="@+id/sp_mode_ingredient_type_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_name_title"
+        app:layout_constraintLeft_toLeftOf="@id/sp_mode_ingredient_vertical_line_2"
+        android:layout_marginTop="26dp"
+        android:text="Typ składnika: "
+        android:textSize="26sp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/sp_mode_ingredient_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_name_input"
+        app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_type_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/sp_mode_ingredient_type_title"
+        android:layout_marginLeft="20dp"
+        android:textSize="24sp"
+        android:text="TEST"
+        />
+    <TextView
+        android:id="@+id/sp_mode_ingredient_price_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_type_title"
+        app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_vertical_line_2"
+        android:text="Cena: "
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginTop="26dp"
+        />
+    <TextView
+        android:id="@+id/sp_mode_ingredient_price_input"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_price_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/sp_mode_ingredient_price_title"
+        android:layout_marginLeft="20dp"
+        android:textSize="24sp"
+        android:text="TEST"
+        />
+
+    <TextView
+        android:id="@+id/sp_mode_ingredient_information_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_price_title"
+        app:layout_constraintLeft_toLeftOf="@id/sp_mode_ingredient_vertical_line_2"
+        android:layout_marginTop="26dp"
+        android:text="Info: "
+        android:textSize="26sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/sp_mode_ingredient_info_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_price_title"
+        app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_information_title"
+        app:layout_constraintRight_toRightOf="@id/sp_mode_ingredient_vertical_line_3"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="20dp"
+
+        android:background="@drawable/form_button"
+        android:backgroundTint="#F5F5DC"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:inputType="textMultiLine|textCapSentences"
+        android:gravity="top|start"
+        android:minLines="8"
+        android:scrollbars="vertical"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/sp_mode_ingredient_vertical_line_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9"
+        />
+
+    <Button
+        android:id="@+id/sp_mode_ingredient_cancel_btn"
+        android:layout_width="324dp"
+        android:layout_height="90dp"
+        style="@style/CustomFormButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/sp_mode_ingredient_info_vertical_line_1"
+        android:layout_marginBottom="36dp"
+        android:text="Zamknij"
+        android:textSize="24sp"
+        />
+
+    <Button
+        android:id="@+id/sp_mode_ingredient_save_btn"
+        android:layout_width="324dp"
+        android:layout_height="90dp"
+        style="@style/CustomFormButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/sp_mode_ingredient_vertical_line_3"
+        android:layout_marginBottom="36dp"
+        android:text="Dodaj do mojego napoju"
+        android:textSize="24sp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
