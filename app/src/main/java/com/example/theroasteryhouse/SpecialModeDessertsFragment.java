@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import com.example.theroasteryhouse.databinding.FragmentMenuBinding; // Можемо перевикористати існуючий layout меню
+import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
+import com.example.theroasteryhouse.models.Ingredient;
 import com.example.theroasteryhouse.models.MenuItem;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpecialModeDessertsFragment extends Fragment {
@@ -28,16 +31,26 @@ public class SpecialModeDessertsFragment extends Fragment {
     }
 
     private void setupDessertsList() {
-        List<MenuItem> desserts = db.getMenuItemsByCategory("Desery");
+        List<MenuItem> menuItems = db.getMenuItemsByCategory("Desery");
 
-        StandardMenuAdapter adapter = new StandardMenuAdapter(desserts, item -> {
-         // Логіка кліку: додати десерт у праве вікно замовлення
-        //     ((SpecialModeMainScreenActivity) requireActivity()).addToOrder(item);
+        List<Ingredient> ingredients = new ArrayList<>();
+        for (MenuItem m : menuItems) {
+            ingredients.add(new Ingredient(m.getId(), m.getName(), "Pyszny deser", "", "dessert", m.getPriceSingle()));
+        }
+        SpecialIngredientsAdapter adapter = new SpecialIngredientsAdapter(ingredients, new SpecialIngredientsAdapter.OnItemActionListener() {
+            @Override
+            public void onInfo(Ingredient item) {
+            }
+
+            @Override
+            public void onChoose(Ingredient item) {
+                if (getActivity() instanceof SpecialModeMainScreenActivity) {
+                    ((SpecialModeMainScreenActivity) getActivity()).updateDrinkComponent("dessert", item);
+                }
+            }
         });
 
         binding.menuRecycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
         binding.menuRecycler.setAdapter(adapter);
-
-        // Примітка: Тобі треба розкоментувати рядки вище, коли буде готовий StandardMenuAdapter
     }
 }

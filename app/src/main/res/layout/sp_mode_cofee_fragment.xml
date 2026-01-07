@@ -161,6 +161,7 @@
             android:layout_marginBottom="30dp">
 
             <RadioButton
+                android:id="@+id/rb_sp_mode_milk_foam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Spienione mleko"
@@ -168,6 +169,7 @@
                 android:layout_marginEnd="20dp" />
 
             <RadioButton
+                android:id="@+id/rb_sp_mode_normal_milk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Zwykle mleko"

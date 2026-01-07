@@ -136,6 +136,43 @@
             android:textSize="22sp"
             android:textColor="@color/functional_buttons_text_color"
             android:background="@color/menu_item_background"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sp_mode_right_panel_order_recycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/sp_mode_order_header"
+            app:layout_constraintLeft_toLeftOf="@id/sp_mode_right_panel"
+            app:layout_constraintRight_toRightOf="@id/sp_mode_right_panel"
+            android:layout_marginTop="24dp"
+            android:background="@color/left_right_panels_background"
+            />
+
+        <TextView
+            android:id="@+id/sp_mode_right_panel_amount_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suma: "
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/sp_mode_add_drink_btn"
+            app:layout_constraintLeft_toLeftOf="@id/sp_mode_summary_btn"
+            android:layout_marginBottom="15dp"
+            android:background="@color/left_right_panels_background"
+            />
+
+        <TextView
+            android:id="@+id/sp_mode_right_panel_amount_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:background="@color/left_right_panels_background"
+            app:layout_constraintBottom_toTopOf="@id/sp_mode_add_drink_btn"
+            app:layout_constraintRight_toRightOf="@id/sp_mode_add_drink_btn"
+            app:layout_constraintBaseline_toBaselineOf="@id/sp_mode_right_panel_amount_title"
+            />
         
         <ImageButton
             android:id="@+id/sp_mode_add_drink_btn"

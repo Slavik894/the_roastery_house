@@ -43,7 +43,12 @@ public class SpecialModeTeaFragment extends Fragment {
         SpecialIngredientsAdapter adapter = new SpecialIngredientsAdapter(ingredients, new SpecialIngredientsAdapter.OnItemActionListener() {
             @Override
             public void onInfo(Ingredient item) {
-                Toast.makeText(getContext(), item.getInfo(), Toast.LENGTH_SHORT).show();
+                UserIngredientInfoFragment infoFragment = UserIngredientInfoFragment.newInstance(item.getId());
+
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.sp_mode_center_panel, infoFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
 
             @Override
@@ -54,8 +59,10 @@ public class SpecialModeTeaFragment extends Fragment {
                     selectedAdditive = item;
                 }
 
-                // Тут можна викликати оновлення правої панелі
-                // ((SpecialModeMainScreenActivity) requireActivity()).updateRightPanel(...);
+                if (getActivity() instanceof SpecialModeMainScreenActivity) {
+                    ((SpecialModeMainScreenActivity) getActivity())
+                            .updateDrinkComponent(dbType, item);
+                }
             }
         });
 
@@ -66,7 +73,14 @@ public class SpecialModeTeaFragment extends Fragment {
     private void setupSliders() {
         if (binding.spModeTeaWaterSlider != null) {
             binding.spModeTeaWaterSlider.addOnChangeListener((slider, value, fromUser) -> {
-                waterVolume = (int) value;
+                int volume = (int) value;
+                if (volume > 0) {
+                    Ingredient waterItem = new Ingredient(-1, "Woda: " + volume + " ml", "", "", "volume_water", 0.0);
+
+                    if (getActivity() instanceof SpecialModeMainScreenActivity) {
+                        ((SpecialModeMainScreenActivity) getActivity()).updateDrinkComponent("volume_water", waterItem);
+                    }
+                }
             });
         }
     }

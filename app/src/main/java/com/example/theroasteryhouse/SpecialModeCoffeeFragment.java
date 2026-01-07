@@ -41,6 +41,7 @@ public class SpecialModeCoffeeFragment extends Fragment {
         setupSection(binding.spModeCoffeeRecyclerAdditives, "additive");
 
         setupSliders();
+        setupRadioButtons();
 
         return binding.getRoot();
     }
@@ -51,15 +52,17 @@ public class SpecialModeCoffeeFragment extends Fragment {
         SpecialIngredientsAdapter adapter = new SpecialIngredientsAdapter(ingredients, new SpecialIngredientsAdapter.OnItemActionListener() {
             @Override
             public void onInfo(Ingredient item) {
-                Toast.makeText(getContext(), item.getInfo(), Toast.LENGTH_LONG).show();
+                UserIngredientInfoFragment infoFragment = UserIngredientInfoFragment.newInstance(item.getId());
+
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.sp_mode_center_panel, infoFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
 
             @Override
             public void onChoose(Ingredient item) {
                 saveSelection(dbType, item);
-
-                // Тут можна додати логіку оновлення Правої Панелі
-                // updateRightPanel();
             }
         });
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -82,18 +85,54 @@ public class SpecialModeCoffeeFragment extends Fragment {
                 selectedAdditive = item;
                 break;
         }
+        if (getActivity() instanceof SpecialModeMainScreenActivity) {
+            ((SpecialModeMainScreenActivity) getActivity())
+                    .updateDrinkComponent(type, item);
+        }
     }
 
     private void setupSliders() {
         // Слайдер води
         if (binding.spModeCoffeeWaterSlider != null) {
             binding.spModeCoffeeWaterSlider.addOnChangeListener((slider, value, fromUser) -> {
-                waterVolume = (int) value;
+                int volume = (int) value;
+                if (volume > 0) {
+                    Ingredient waterItem = new Ingredient(-1, "Woda: " + volume + " ml", "", "", "volume_water", 0.0);
+
+                    if (getActivity() instanceof SpecialModeMainScreenActivity) {
+                        ((SpecialModeMainScreenActivity) getActivity()).updateDrinkComponent("volume_water", waterItem);
+                    }
+                }
             });
         }
+
         if (binding.spModeCoffeeMilkSlider != null) {
             binding.spModeCoffeeMilkSlider.addOnChangeListener((slider, value, fromUser) -> {
-                milkVolume = (int) value;
+                int volume = (int) value;
+                if (volume > 0) {
+                    Ingredient milkItem = new Ingredient(-1, "Mleko: " + volume + " ml", "", "", "volume_milk", 0.0);
+
+                    if (getActivity() instanceof SpecialModeMainScreenActivity) {
+                        ((SpecialModeMainScreenActivity) getActivity()).updateDrinkComponent("volume_milk", milkItem);
+                    }
+                }
+            });
+        }
+    }
+    private void setupRadioButtons() {
+        if (binding.spModeCoffeeMilkTeksture != null) {
+            binding.spModeCoffeeMilkTeksture.setOnCheckedChangeListener((group, checkedId) -> {
+                android.widget.RadioButton checkedBtn = group.findViewById(checkedId);
+                if (checkedBtn != null) {
+                    String textureName = checkedBtn.getText().toString();
+
+                    Ingredient textureItem = new Ingredient(-1, "Tekstura: " + textureName, "", "", "milk_texture", 0.0);
+
+                    if (getActivity() instanceof SpecialModeMainScreenActivity) {
+                        ((SpecialModeMainScreenActivity) getActivity())
+                                .updateDrinkComponent("milk_texture", textureItem);
+                    }
+                }
             });
         }
     }

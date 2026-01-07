@@ -163,17 +163,8 @@
         android:textSize="24sp"
         />
 
-    <Button
-        android:id="@+id/sp_mode_ingredient_save_btn"
-        android:layout_width="324dp"
-        android:layout_height="90dp"
-        style="@style/CustomFormButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/sp_mode_ingredient_vertical_line_3"
-        android:layout_marginBottom="36dp"
-        android:text="Dodaj do mojego napoju"
-        android:textSize="24sp"
-        />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
