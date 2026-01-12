@@ -45,7 +45,7 @@ public class SpecialModeDessertsFragment extends Fragment {
             @Override
             public void onChoose(Ingredient item) {
                 if (getActivity() instanceof SpecialModeMainScreenActivity) {
-                    ((SpecialModeMainScreenActivity) getActivity()).updateDrinkComponent("dessert", item);
+                    ((SpecialModeMainScreenActivity) getActivity()).addDessertToOrder(item);
                 }
             }
         });

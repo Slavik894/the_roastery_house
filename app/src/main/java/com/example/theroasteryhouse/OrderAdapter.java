@@ -1,6 +1,7 @@
 package com.example.theroasteryhouse;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     private List<OrderItem> orderItems = new ArrayList<>();
     private OnDeleteItemListener deleteListener;
+    private boolean isEditable = true;
 
     public interface OnDeleteItemListener {
         void onDeleteClick(int position);
@@ -45,6 +47,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         orderItems.clear();
         notifyDataSetChanged();
     }
+    public void setEditable(boolean editable) {
+        this.isEditable = editable;
+    }
+
 
     @NonNull
     @Override
@@ -56,12 +62,38 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderItem item = orderItems.get(position);
-        holder.binding.orderItemName.setText(item.getDisplayName());
-        holder.binding.orderItemPrice.setText(String.format("%.2f zł", item.getPrice()));
 
+        holder.binding.orderItemName.setText(item.getDisplayName());
+
+        if (item.isHeader()) {
+            holder.binding.orderItemName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            holder.binding.orderItemName.setTypeface(null, android.graphics.Typeface.BOLD);
+            holder.binding.orderItemName.setTextSize(20);
+            holder.binding.orderItemPrice.setVisibility(View.GONE);
+            holder.binding.btnDeleteItem.setVisibility(View.INVISIBLE);
+
+        } else {
+            holder.binding.orderItemName.setTextSize(18);
+            holder.binding.orderItemPrice.setVisibility(View.VISIBLE);
+            holder.binding.orderItemPrice.setText(String.format("%.2f zł", item.getPrice()));
+            holder.binding.btnDeleteItem.setVisibility(View.VISIBLE);
+            holder.binding.getRoot().setBackground(null);
+
+        }
         holder.binding.btnDeleteItem.setOnClickListener(v -> {
-            deleteListener.onDeleteClick(holder.getAdapterPosition());
+            if (!item.isHeader()) {
+                deleteListener.onDeleteClick(holder.getAdapterPosition());
+            }
         });
+
+        if (isEditable) {
+            holder.binding.btnDeleteItem.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.btnDeleteItem.setVisibility(View.GONE);
+            holder.itemView.setBackgroundResource(0);
+            holder.binding.orderItemName.setBackgroundResource(0);
+            holder.binding.orderItemPrice.setBackgroundResource(0);
+        }
     }
 
     @Override

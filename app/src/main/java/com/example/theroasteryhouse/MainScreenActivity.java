@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +58,7 @@ public class MainScreenActivity extends AppCompatActivity {
         binding.leftPanelDessertsBtn.setOnClickListener(v -> showMenuScreen("Desery"));
         binding.leftPanelAdditivesBtn.setOnClickListener(v -> showMenuScreen("Dodatki"));
         binding.leftPanelSettingsBtn.setOnClickListener(v -> showSettingsScreen());
-
+        binding.rightPanelSummaryBtn.setOnClickListener(v -> showSummaryDialog());
     }
 
     private void showMenuScreen(String category) {
@@ -258,4 +259,55 @@ public class MainScreenActivity extends AppCompatActivity {
             if (totalPrice < 0) totalPrice = 0;
             binding.rightPanelAmountNumber.setText(String.format("%.2f zł", totalPrice));
         }
+
+    private void showSummaryDialog() {
+        if (orderAdapter.getItems().isEmpty()) {
+            Toast.makeText(this, "Koszyk jest pusty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_order_summary, null);
+        builder.setView(view);
+        android.app.AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+        androidx.recyclerview.widget.RecyclerView summaryRecycler = view.findViewById(R.id.summary_recycler);
+        TextView totalValue = view.findViewById(R.id.summary_total_value);
+        Button confirmBtn = view.findViewById(R.id.btn_confirm_order);
+        OrderAdapter summaryAdapter = new OrderAdapter(null);
+
+        for (com.example.theroasteryhouse.models.OrderItem item : orderAdapter.getItems()) {
+            summaryAdapter.addItem(item);
+        }
+        summaryAdapter.setEditable(false);
+        summaryRecycler.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+        summaryRecycler.setAdapter(summaryAdapter);
+        String currentTotalText = binding.rightPanelAmountNumber.getText().toString();
+        double total = 0;
+        for(com.example.theroasteryhouse.models.OrderItem item : orderAdapter.getItems()) {
+            total += item.getPrice();
+        }
+        totalValue.setText(String.format("%.2f zł", total));
+
+        confirmBtn.setOnClickListener(v -> {
+
+            Toast.makeText(this, "Zamówienie przyjęte!", Toast.LENGTH_LONG).show();
+
+            orderAdapter.clear();
+            binding.rightPanelAmountNumber.setText("0.00 zł");
+
+            dialog.dismiss();
+        });
+
+        dialog.show();
+
+        android.view.Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(
+                    (int) (getResources().getDisplayMetrics().density * 800),
+                    android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
 }

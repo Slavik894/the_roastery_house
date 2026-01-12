@@ -22,6 +22,8 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
     private ActivitySpecialModeMainScreenBinding binding;
     private OrderAdapter rightPanelAdapter;
      private Map<String, Ingredient> currentDrinkComponents = new HashMap<>();
+    private java.util.List<OrderItem> confirmedItems = new java.util.ArrayList<>();
+    private int drinksCounter = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,10 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         });
 
         binding.spModeLeftPanelExitBtn.setOnClickListener(v -> finish());
+        binding.spModeAddDrinkBtn.setOnClickListener(v -> {
+            onAddNextDrinkClicked();
+        });
     }
-
     private void loadFragment(Fragment fragment, String type) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.sp_mode_center_panel, fragment)
@@ -77,7 +81,6 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
     }
 
     public void setRightPanelVisibility(boolean isVisible) {
-        // 1. Керуємо видимістю правої панелі
         if (binding.spModeRightPanel != null) {
             binding.spModeRightPanel.setVisibility(isVisible ? View.VISIBLE : View.GONE);
         }
@@ -96,9 +99,6 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         rightPanelAdapter = new OrderAdapter(position -> {
             removeItemAt(position);
         });
-
-        // Прив'язуємо адаптер до RecyclerView
-        // Переконайся, що в XML ID списку саме spModeRightPanelRecycler
         binding.spModeRightPanelOrderRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.spModeRightPanelOrderRecycler.setAdapter(rightPanelAdapter);
 
@@ -112,16 +112,27 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
 
     private void refreshRightPanelList() {
         rightPanelAdapter.clear();
-        for (Ingredient ingredient : currentDrinkComponents.values()) {
-            OrderItem item = new OrderItem(ingredient.getName(), "", ingredient.getPrice());
+        for (OrderItem item : confirmedItems) {
             rightPanelAdapter.addItem(item);
+        }
+        if (!currentDrinkComponents.isEmpty()) {
+            rightPanelAdapter.addItem(new OrderItem("--- Napój #" + drinksCounter + " (Edytowany) ---"));
+
+            for (Ingredient ingredient : currentDrinkComponents.values()) {
+                OrderItem item = new OrderItem(ingredient.getName(), "", ingredient.getPrice());
+                rightPanelAdapter.addItem(item);
+            }
         }
 
         updateTotalStats();
     }
     private void removeItemAt(int position) {
         if (position < 0 || position >= rightPanelAdapter.getItems().size()) return;
-
+        if (position < confirmedItems.size()) {
+            confirmedItems.remove(position);
+            refreshRightPanelList();
+            return;
+        }
         OrderItem itemToRemove = rightPanelAdapter.getItems().get(position);
         String keyToRemove = null;
         for (Map.Entry<String, Ingredient> entry : currentDrinkComponents.entrySet()) {
@@ -139,9 +150,33 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
 
     private void updateTotalStats() {
         double total = 0;
+        for (OrderItem item : confirmedItems) {
+            total += item.getPrice();
+        }
         for (Ingredient ing : currentDrinkComponents.values()) {
             total += ing.getPrice();
         }
+
         binding.spModeRightPanelAmountNumber.setText(String.format(" %.2f zł", total));
+    }
+
+    private void onAddNextDrinkClicked() {
+        if (currentDrinkComponents.isEmpty()) {
+            return;
+        }
+        confirmedItems.add(new OrderItem("--- Napój #" + drinksCounter + " ---"));
+
+        for (Ingredient ingredient : currentDrinkComponents.values()) {
+            confirmedItems.add(new OrderItem(ingredient.getName(), "", ingredient.getPrice()));
+        }
+        currentDrinkComponents.clear();
+        drinksCounter++;
+        refreshRightPanelList();
+
+    }
+    public void addDessertToOrder(Ingredient dessert) {
+        confirmedItems.add(new OrderItem("--- Deser ---"));
+        confirmedItems.add(new OrderItem(dessert.getName(), "", dessert.getPrice()));
+        refreshRightPanelList();
     }
 }
