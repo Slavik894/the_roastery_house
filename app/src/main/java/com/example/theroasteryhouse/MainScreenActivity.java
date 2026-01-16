@@ -57,11 +57,17 @@ public class MainScreenActivity extends AppCompatActivity {
         binding.leftPanelTeaBtn.setOnClickListener(v -> showMenuScreen("Herbata"));
         binding.leftPanelDessertsBtn.setOnClickListener(v -> showMenuScreen("Desery"));
         binding.leftPanelAdditivesBtn.setOnClickListener(v -> showMenuScreen("Dodatki"));
-        binding.leftPanelSettingsBtn.setOnClickListener(v -> showSettingsScreen());
+        binding.leftPanelSettingsBtn.setOnClickListener(v -> {
+            if ("settings".equals(binding.centerPanel.getTag())) {
+                return;
+            }
+            showSettingsScreen();
+        });
         binding.rightPanelSummaryBtn.setOnClickListener(v -> showSummaryDialog());
     }
 
     private void showMenuScreen(String category) {
+        binding.centerPanel.setTag("menu");
         FragmentMenuBinding menuBinding =
                 FragmentMenuBinding.inflate(getLayoutInflater());
         binding.centerPanel.removeAllViews();
@@ -149,7 +155,12 @@ public class MainScreenActivity extends AppCompatActivity {
         LinearLayout.LayoutParams rightPanelParams =
                 (LinearLayout.LayoutParams) binding.rightPanel.getLayoutParams();
 
-        centerPanelParams.weight = centerPanelParams.weight + rightPanelParams.weight;
+        centerPanelParams.weight = 7.5f;
+
+        binding.centerPanel.setLayoutParams(centerPanelParams);
+
+        binding.rightPanel.setVisibility(View.GONE);
+        binding.centerPanel.setTag("settings");
         binding.centerPanel.setLayoutParams(centerPanelParams);
 
         binding.rightPanel.setVisibility(View.GONE);
@@ -297,6 +308,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
             orderAdapter.clear();
             binding.rightPanelAmountNumber.setText("0.00 zł");
+            totalPrice = 0.0;
 
             dialog.dismiss();
         });

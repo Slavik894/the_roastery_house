@@ -93,8 +93,8 @@
     <Button
         android:id="@+id/btn_confirm_order"
         style="@style/CustomFormButton"
-        android:layout_width="350dp"
-        android:layout_height="80dp"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:text="Zatwierdź"
         android:textSize="28sp"

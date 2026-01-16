@@ -25,7 +25,8 @@ public class SpecialModeDessertsFragment extends Fragment {
         db = new DatabaseHelper(requireContext());
         setupDessertsList();
 
-        binding.categoryTitle.setText("Desery");
+        binding.categoryTitle.setText("Tryb specjalny\nDesery");
+        binding.categoryTitle.setTextSize(28);
 
         return binding.getRoot();
     }
@@ -37,18 +38,14 @@ public class SpecialModeDessertsFragment extends Fragment {
         for (MenuItem m : menuItems) {
             ingredients.add(new Ingredient(m.getId(), m.getName(), "Pyszny deser", "", "dessert", m.getPriceSingle()));
         }
-        SpecialIngredientsAdapter adapter = new SpecialIngredientsAdapter(ingredients, new SpecialIngredientsAdapter.OnItemActionListener() {
-            @Override
-            public void onInfo(Ingredient item) {
-            }
-
-            @Override
-            public void onChoose(Ingredient item) {
-                if (getActivity() instanceof SpecialModeMainScreenActivity) {
-                    ((SpecialModeMainScreenActivity) getActivity()).addDessertToOrder(item);
-                }
-            }
-        });
+        SpecialDessertsAdapter adapter = new SpecialDessertsAdapter(
+                ingredients,
+                dessert -> {
+                    if (getActivity() instanceof SpecialModeMainScreenActivity) {
+                        ((SpecialModeMainScreenActivity) getActivity())
+                                .addDessertToOrder(dessert);
+                    }
+                });
 
         binding.menuRecycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
         binding.menuRecycler.setAdapter(adapter);
