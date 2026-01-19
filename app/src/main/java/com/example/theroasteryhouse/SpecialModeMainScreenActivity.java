@@ -69,6 +69,9 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         binding.spModeAddDrinkBtn.setOnClickListener(v -> {
             onAddNextDrinkClicked();
         });
+        binding.spModeSummaryBtn.setOnClickListener(v -> {
+            showSummaryDialog();
+        });
     }
     private void loadFragment(Fragment fragment, String type) {
         getSupportFragmentManager().beginTransaction()
@@ -210,5 +213,64 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         confirmedItems.add(new OrderItem("--- Deser ---"));
         confirmedItems.add(new OrderItem(dessert.getName(), "", dessert.getPrice()));
         refreshRightPanelList();
+    }
+
+    private void showSummaryDialog() {
+        if (confirmedItems.isEmpty() && currentDrinkComponents.isEmpty()) {
+            android.widget.Toast.makeText(this, "Koszyk jest pusty!", android.widget.Toast.LENGTH_SHORT).show();
+            return;
+        }
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_order_summary, null);
+        builder.setView(view);
+        android.app.AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+        androidx.recyclerview.widget.RecyclerView summaryRecycler = view.findViewById(R.id.summary_recycler);
+        android.view.ViewGroup.LayoutParams params = summaryRecycler.getLayoutParams();
+        params.height = (int) (getResources().getDisplayMetrics().density * 350);
+        summaryRecycler.setLayoutParams(params);
+        android.widget.TextView totalValue = view.findViewById(R.id.summary_total_value);
+        android.widget.Button confirmBtn = view.findViewById(R.id.btn_confirm_order);
+        OrderAdapter summaryAdapter = new OrderAdapter(position -> {});
+        summaryAdapter.setEditable(false);
+        double total = 0;
+        for (OrderItem item : confirmedItems) {
+            summaryAdapter.addItem(item);
+            total += item.getPrice();
+        }
+        if (!currentDrinkComponents.isEmpty()) {
+            summaryAdapter.addItem(new OrderItem("--- Napój #" + drinksCounter + " (w trakcie) ---"));
+            for (Ingredient ing : currentDrinkComponents.values()) {
+                OrderItem item = new OrderItem(ing.getName(), "", ing.getPrice());
+                summaryAdapter.addItem(item);
+                total += ing.getPrice();
+            }
+        }
+
+        summaryRecycler.setLayoutManager(new LinearLayoutManager(this));
+        summaryRecycler.setAdapter(summaryAdapter);
+        totalValue.setText(String.format("%.2f zł", total));
+        confirmBtn.setOnClickListener(v -> {
+            android.widget.Toast.makeText(this, "Dziękujemy! Twoje zamówienie zostało przyjęte.", android.widget.Toast.LENGTH_LONG).show();
+
+            confirmedItems.clear();
+            currentDrinkComponents.clear();
+            drinksCounter = 1;
+            additiveCounter = 0;
+            refreshRightPanelList();
+
+            dialog.dismiss();
+        });
+
+        dialog.show();
+        android.view.Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(
+                    (int) (getResources().getDisplayMetrics().density * 800), // Ширина 800dp
+                    android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
     }
 }
