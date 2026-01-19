@@ -15,15 +15,17 @@ import com.example.theroasteryhouse.models.Ingredient;
 import com.example.theroasteryhouse.models.OrderItem;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SpecialModeMainScreenActivity extends AppCompatActivity {
 
     private ActivitySpecialModeMainScreenBinding binding;
     private OrderAdapter rightPanelAdapter;
-     private Map<String, Ingredient> currentDrinkComponents = new HashMap<>();
+     private Map<String, Ingredient> currentDrinkComponents = new LinkedHashMap<>();
     private java.util.List<OrderItem> confirmedItems = new java.util.ArrayList<>();
     private int drinksCounter = 1;
+    private long additiveCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,14 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
             loadFragment(new SpecialModeDessertsFragment(), "desserts");
         });
 
-        binding.spModeLeftPanelExitBtn.setOnClickListener(v -> finish());
+        binding.spModeLeftPanelExitBtn.setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(SpecialModeMainScreenActivity.this, SelectOrderTypeActivity.class);
+
+            intent.setFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            startActivity(intent);
+            finish();
+        });
         binding.spModeAddDrinkBtn.setOnClickListener(v -> {
             onAddNextDrinkClicked();
         });
@@ -105,6 +114,12 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         updateTotalStats();
     }
 
+    public void addAdditiveToDrink(Ingredient ingredient) {
+        additiveCounter++;
+        String uniqueKey = "additive_" + additiveCounter;
+        updateDrinkComponent(uniqueKey, ingredient);
+    }
+
     public void updateDrinkComponent(String type, Ingredient ingredient) {
         currentDrinkComponents.put(type, ingredient);
         refreshRightPanelList();
@@ -130,6 +145,24 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         if (position < 0 || position >= rightPanelAdapter.getItems().size()) return;
         if (position < confirmedItems.size()) {
             confirmedItems.remove(position);
+            int headerIndex = position - 1;
+
+            if (headerIndex >= 0 && headerIndex < confirmedItems.size()) {
+                OrderItem possibleHeader = confirmedItems.get(headerIndex);
+                if (possibleHeader.isHeader()) {
+                    boolean isLastElement = (headerIndex == confirmedItems.size() - 1);
+                    boolean isNextAlsoHeader = false;
+
+                    if (!isLastElement) {
+                        isNextAlsoHeader = confirmedItems.get(headerIndex + 1).isHeader();
+                    }
+
+                    if (isLastElement || isNextAlsoHeader) {
+                        confirmedItems.remove(headerIndex);
+                    }
+                }
+            }
+
             refreshRightPanelList();
             return;
         }
@@ -172,7 +205,6 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         currentDrinkComponents.clear();
         drinksCounter++;
         refreshRightPanelList();
-
     }
     public void addDessertToOrder(Ingredient dessert) {
         confirmedItems.add(new OrderItem("--- Deser ---"));

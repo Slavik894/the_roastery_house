@@ -86,13 +86,16 @@ public class SpecialModeCoffeeFragment extends Fragment {
                 break;
         }
         if (getActivity() instanceof SpecialModeMainScreenActivity) {
-            ((SpecialModeMainScreenActivity) getActivity())
-                    .updateDrinkComponent(type, item);
+            SpecialModeMainScreenActivity activity = (SpecialModeMainScreenActivity) getActivity();
+            if (type.equals("additive")) {
+                activity.addAdditiveToDrink(item);
+            } else {
+                activity.updateDrinkComponent(type, item);
+            }
         }
     }
 
     private void setupSliders() {
-        // Слайдер води
         if (binding.spModeCoffeeWaterSlider != null) {
             binding.spModeCoffeeWaterSlider.addOnChangeListener((slider, value, fromUser) -> {
                 int volume = (int) value;

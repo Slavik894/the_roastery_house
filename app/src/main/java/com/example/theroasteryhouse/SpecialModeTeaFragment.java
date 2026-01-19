@@ -60,8 +60,13 @@ public class SpecialModeTeaFragment extends Fragment {
                 }
 
                 if (getActivity() instanceof SpecialModeMainScreenActivity) {
-                    ((SpecialModeMainScreenActivity) getActivity())
-                            .updateDrinkComponent(dbType, item);
+                    SpecialModeMainScreenActivity activity = (SpecialModeMainScreenActivity) getActivity();
+
+                    if (dbType.equals("tea_additive")) {
+                        activity.addAdditiveToDrink(item);
+                    } else {
+                        activity.updateDrinkComponent(dbType, item);
+                    }
                 }
             }
         });

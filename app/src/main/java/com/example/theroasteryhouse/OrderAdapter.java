@@ -70,14 +70,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             holder.binding.orderItemName.setTypeface(null, android.graphics.Typeface.BOLD);
             holder.binding.orderItemName.setTextSize(20);
             holder.binding.orderItemPrice.setVisibility(View.GONE);
-            holder.binding.btnDeleteItem.setVisibility(View.INVISIBLE);
+            holder.binding.btnDeleteItem.setVisibility(View.GONE);
 
         } else {
+            holder.binding.orderItemName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             holder.binding.orderItemName.setTextSize(18);
             holder.binding.orderItemPrice.setVisibility(View.VISIBLE);
             holder.binding.orderItemPrice.setText(String.format("%.2f zł", item.getPrice()));
-            holder.binding.btnDeleteItem.setVisibility(View.VISIBLE);
             holder.binding.getRoot().setBackground(null);
+
+            if (isEditable) {
+                holder.binding.btnDeleteItem.setVisibility(View.VISIBLE);
+            } else {
+                holder.binding.btnDeleteItem.setVisibility(View.GONE);
+            }
 
         }
         holder.binding.btnDeleteItem.setOnClickListener(v -> {
@@ -86,9 +92,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             }
         });
 
-        if (isEditable) {
-            holder.binding.btnDeleteItem.setVisibility(View.VISIBLE);
-        } else {
+        if (!isEditable){
             holder.binding.btnDeleteItem.setVisibility(View.GONE);
             holder.itemView.setBackgroundResource(0);
             holder.binding.orderItemName.setBackgroundResource(0);
