@@ -304,7 +304,13 @@ public class MainScreenActivity extends AppCompatActivity {
 
         confirmBtn.setOnClickListener(v -> {
 
-            Toast.makeText(this, "Zamówienie przyjęte!", Toast.LENGTH_LONG).show();
+            boolean success = db.insertOrder(userId, orderAdapter.getItems(), totalPrice);
+
+            if (success) {
+                Toast.makeText(this, "Zamówienie zapisane w bazie!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Błąd zapisu zamówienia", Toast.LENGTH_SHORT).show();
+            }
 
             orderAdapter.clear();
             binding.rightPanelAmountNumber.setText("0.00 zł");

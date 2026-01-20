@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.theroasteryhouse.models.MenuItem;
+import com.example.theroasteryhouse.models.OrderItem;
 import com.example.theroasteryhouse.models.User;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "coffee_app.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public static final String TABLE_USERS = "users";
 
@@ -51,6 +52,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INGREDIENT_IMAGE_URI = "image_uri";
     public static final String COLUMN_INGREDIENT_TYPE = "type";
     public static final String COLUMN_INGREDIENT_PRICE = "price";
+
+    private static final String TABLE_ORDERS = "orders";
+    private static final String TABLE_ORDER_DETAILS = "order_details";
+
+    private static final String COLUMN_ORDER_ID = "_id";
+    private static final String COLUMN_ORDER_USER_ID = "user_id";
+    private static final String COLUMN_ORDER_DATE = "order_date";
+    private static final String COLUMN_ORDER_TOTAL = "total_price";
+
+    private static final String COLUMN_DETAIL_ID = "_id";
+    private static final String COLUMN_DETAIL_ORDER_ID = "order_id";
+    private static final String COLUMN_DETAIL_ITEM_NAME = "item_name";
+    private static final String COLUMN_DETAIL_ITEM_PRICE = "item_price";
 
 
     public DatabaseHelper(Context context) {
@@ -101,6 +115,22 @@ public void onCreate(SQLiteDatabase db) {
             COLUMN_INGREDIENT_TYPE + " TEXT," +
             COLUMN_INGREDIENT_PRICE + " REAL" +
          ")";
+
+    String createOrdersTable = "CREATE TABLE " + TABLE_ORDERS + " (" +
+            COLUMN_ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_ORDER_USER_ID + " INTEGER, " +
+            COLUMN_ORDER_DATE + " TEXT, " +
+            COLUMN_ORDER_TOTAL + " REAL)";
+    db.execSQL(createOrdersTable);
+
+    String createDetailsTable = "CREATE TABLE " + TABLE_ORDER_DETAILS + " (" +
+            COLUMN_DETAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_DETAIL_ORDER_ID + " INTEGER, " +
+            COLUMN_DETAIL_ITEM_NAME + " TEXT, " +
+            COLUMN_DETAIL_ITEM_PRICE + " REAL, " +
+            "FOREIGN KEY(" + COLUMN_DETAIL_ORDER_ID + ") REFERENCES " + TABLE_ORDERS + "(" + COLUMN_ORDER_ID + "))";
+    db.execSQL(createDetailsTable);
+
  db.execSQL(CREATE_INGREDIENTS_TABLE);
 }
 
@@ -111,6 +141,8 @@ public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DESSERTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADDONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDER_DETAILS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS);
         onCreate(db);
 
 }
@@ -472,6 +504,45 @@ public List<User> getAllUsers() {
 
         db.close();
         return items;
+    }
+
+    public boolean insertOrder(int userId, List<OrderItem> items, double totalPrice) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues orderValues = new ContentValues();
+            orderValues.put(COLUMN_ORDER_USER_ID, userId);
+
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault());
+            String currentDate = sdf.format(new java.util.Date());
+
+            orderValues.put(COLUMN_ORDER_DATE, currentDate);
+            orderValues.put(COLUMN_ORDER_TOTAL, totalPrice);
+
+            long orderId = db.insert(TABLE_ORDERS, null, orderValues);
+
+            if (orderId == -1) {
+                return false;
+            }
+
+            for (OrderItem item : items) {
+                ContentValues detailValues = new ContentValues();
+                detailValues.put(COLUMN_DETAIL_ORDER_ID, orderId);
+                detailValues.put(COLUMN_DETAIL_ITEM_NAME, item.getDisplayName());
+                detailValues.put(COLUMN_DETAIL_ITEM_PRICE, item.getPrice());
+
+                db.insert(TABLE_ORDER_DETAILS, null, detailValues);
+            }
+
+            db.setTransactionSuccessful();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            db.endTransaction();
+        }
     }
 
 

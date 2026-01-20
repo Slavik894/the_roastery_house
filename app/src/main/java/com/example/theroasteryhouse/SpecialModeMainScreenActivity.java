@@ -2,6 +2,8 @@ package com.example.theroasteryhouse;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -14,8 +16,10 @@ import com.example.theroasteryhouse.databinding.ActivitySpecialModeMainScreenBin
 import com.example.theroasteryhouse.models.Ingredient;
 import com.example.theroasteryhouse.models.OrderItem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SpecialModeMainScreenActivity extends AppCompatActivity {
@@ -254,7 +258,27 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         summaryRecycler.setAdapter(summaryAdapter);
         totalValue.setText(String.format("%.2f zł", total));
         confirmBtn.setOnClickListener(v -> {
-            android.widget.Toast.makeText(this, "Dziękujemy! Twoje zamówienie zostało przyjęte.", android.widget.Toast.LENGTH_LONG).show();
+            List<OrderItem> finalOrderList = new ArrayList<>();
+
+            finalOrderList.addAll(confirmedItems);
+
+            if (!currentDrinkComponents.isEmpty()) {
+                finalOrderList.add(new OrderItem("--- Napój #" + drinksCounter + " ---"));
+                for (Ingredient ing : currentDrinkComponents.values()) {
+                    finalOrderList.add(new OrderItem(ing.getName(), "", ing.getPrice()));
+                }
+            }
+
+            double finalTotal = 0;
+            for (OrderItem item : finalOrderList) {
+                finalTotal += item.getPrice();
+            }
+
+            boolean success = new DatabaseHelper(this).insertOrder(-1, finalOrderList, finalTotal);
+
+            if (success) {
+                Toast.makeText(this, "Zamówienie przyjęte i zapisane!", Toast.LENGTH_LONG).show();
+            }
 
             confirmedItems.clear();
             currentDrinkComponents.clear();
@@ -269,7 +293,7 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         android.view.Window window = dialog.getWindow();
         if (window != null) {
             window.setLayout(
-                    (int) (getResources().getDisplayMetrics().density * 800), // Ширина 800dp
+                    (int) (getResources().getDisplayMetrics().density * 800),
                     android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
