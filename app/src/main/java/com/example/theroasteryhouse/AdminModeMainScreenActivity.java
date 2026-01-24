@@ -37,6 +37,7 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
         binding.adminLeftPanelUsersBtn.setOnClickListener(v -> showUsersScreen());
         binding.adminLeftPanelMenuItemsBtn.setOnClickListener(v -> showMenuItemsScreen());
         binding.adminLeftPanelIngredientsBtn.setOnClickListener(v -> showIngredientsScreen());
+        binding.adminLeftPanelFinancesBtn.setOnClickListener(v -> showFinancesScreen());
         binding.adminLeftPanelExitBtn.setOnClickListener(view -> {
             Intent intent = new Intent(AdminModeMainScreenActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -208,6 +209,15 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
                     .replace(R.id.center_panel, new AdminIngredientsFragment())
                     .commit();
 
+    }
+
+    private void showFinancesScreen() {
+        binding.centerPanel.removeAllViews();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.center_panel, new AdminFinancesFragment())
+                .commit();
     }
 
 

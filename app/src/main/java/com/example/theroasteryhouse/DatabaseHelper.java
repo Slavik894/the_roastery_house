@@ -545,6 +545,39 @@ public List<User> getAllUsers() {
         }
     }
 
+    public int getOrdersCount(String startDate, String endDate, Boolean isSpecial) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + TABLE_ORDERS + " WHERE " + COLUMN_ORDER_DATE + " BETWEEN ? AND ?";
+
+        if (isSpecial != null) {
+            if (isSpecial) {
+                query += " AND " + COLUMN_ORDER_USER_ID + " = -1";
+            } else {
+                query += " AND " + COLUMN_ORDER_USER_ID + " != -1";
+            }
+        }
+
+        Cursor cursor = db.rawQuery(query, new String[]{startDate, endDate});
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+    public double getTotalRevenue(String startDate, String endDate) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT SUM(" + COLUMN_ORDER_TOTAL + ") FROM " + TABLE_ORDERS + " WHERE " + COLUMN_ORDER_DATE + " BETWEEN ? AND ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{startDate, endDate});
+        double total = 0;
+        if (cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+        }
+        cursor.close();
+        return total;
+    }
+
 
 
 }

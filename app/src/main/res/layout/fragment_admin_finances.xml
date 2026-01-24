@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/fragment_finances_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finanse"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        />
+
+    <TextView
+        android:id="@+id/order_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragment_finances_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_1"
+        android:text="Liczba zamówień na dzisiaj"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"    />
+
+    <TextView
+        android:id="@+id/order_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/order_number_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_1"
+        android:layout_marginTop="20dp"
+        android:text="0"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/standard_order_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/order_number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp"
+        android:text="Zamówienia standardowe: "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/standard_order_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/standard_order_title"
+        app:layout_constraintLeft_toRightOf="@id/standard_order_title"
+        android:text="0"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/special_order_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/standard_order_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Zamówienia specjalne: "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/special_order_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/special_order_title"
+        app:layout_constraintLeft_toRightOf="@id/special_order_title"
+        android:text="0"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/monthly_orders_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liczba zamówień za miesiąc"
+        app:layout_constraintTop_toBottomOf="@id/fragment_finances_title"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="60dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/monthly_orders_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintTop_toBottomOf="@id/monthly_orders_title"
+        app:layout_constraintLeft_toRightOf="@id/guideline_1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/monthly_standard_orders_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/monthly_orders_amount"
+        app:layout_constraintLeft_toRightOf="@id/guideline_1"
+        android:layout_marginTop="20dp"
+        android:text="Zamówienia standardowe: "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/monthly_standard_orders_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/monthly_standard_orders_title"
+        app:layout_constraintLeft_toRightOf="@id/monthly_standard_orders_title"
+        android:text="0"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/monthly_special_orders_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zamówienia specjalne: "
+        app:layout_constraintTop_toBottomOf="@id/monthly_standard_orders_title"
+        app:layout_constraintLeft_toRightOf="@id/guideline_1"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/monthly_special_orders_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBaseline_toBaselineOf="@id/monthly_special_orders_title"
+        app:layout_constraintLeft_toRightOf="@id/monthly_special_orders_title"
+        android:textSize="20sp"
+        />
+
+    <View
+        android:id="@+id/divider_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:background="#000000"
+        app:layout_constraintTop_toBottomOf="@id/monthly_special_orders_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+       />
+
+    <TextView
+        android:id="@+id/today_income_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dzisiejsze zyski"
+        app:layout_constraintTop_toBottomOf="@id/divider_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_1"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/today_income_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/today_income_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_1"
+        android:layout_marginTop="20dp"
+        android:text="TEST"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/monthly_income_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Miesięczne zyski"
+        app:layout_constraintTop_toBottomOf="@id/divider_horizontal"
+        app:layout_constraintLeft_toRightOf="@id/guideline_1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/monthly_income_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST"
+        app:layout_constraintTop_toBottomOf="@id/monthly_income_title"
+        app:layout_constraintLeft_toRightOf="@id/guideline_1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

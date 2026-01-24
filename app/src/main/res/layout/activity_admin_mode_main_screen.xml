@@ -89,6 +89,21 @@
             android:textAlignment="viewStart"
             />
 
+        <Button
+            android:id="@+id/admin_left_panel_finances_btn"
+            android:layout_width="256dp"
+            android:layout_height="60dp"
+            style="@style/CustomFormButton"
+            app:layout_constraintTop_toBottomOf="@id/admin_left_panel_ingredients_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="Finanse"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            />
+
 
 
         <Button
