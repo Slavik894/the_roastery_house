@@ -62,6 +62,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/admin_add_new_ingredient_name_title"
         app:layout_constraintLeft_toRightOf="@id/admin_add_new_ingredient_name_title"
         android:layout_marginLeft="20dp"
+        android:textSize="20sp"
         />
 
     <TextView
@@ -101,6 +102,7 @@
         app:layout_constraintLeft_toRightOf="@id/admin_add_new_ingredient_price_title"
         app:layout_constraintBaseline_toBaselineOf="@id/admin_add_new_ingredient_price_title"
         android:layout_marginLeft="20dp"
+        android:textSize="20sp"
         />
 
     <TextView

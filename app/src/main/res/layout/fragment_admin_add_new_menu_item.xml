@@ -53,8 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/admin_add_new_menu_item_title"
         app:layout_constraintRight_toLeftOf="@id/admin_add_new_menu_item_vertical_line_2"
         app:layout_constraintBaseline_toBaselineOf="@id/admin_add_new_menu_item_item_name_title"
-        android:textSize="26sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
         />
 
     <TextView
