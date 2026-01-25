@@ -18,7 +18,7 @@ public class AdminAddNewMenuItemFragment extends Fragment {
     private FragmentAdminAddNewMenuItemBinding binding;
     private DatabaseHelper db;
 
-    private final String[] categories = {"Kawa", "Herbata", "Desery", "Dodatki"};
+    private final String[] categories = {"Kawa", "Herbata", "Desery"};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -52,7 +52,7 @@ public class AdminAddNewMenuItemFragment extends Fragment {
     }
 
     private void updateUIBasedOnCategory(String category) {
-        if (category.equals("Desery") || category.equals("Dodatki")) {
+        if (category.equals("Desery")) {
 
             binding.adminAddNewMenuItemSizesContainer.setVisibility(View.GONE);
             binding.adminAddNewMenuItemSinglePriceInput.setVisibility(View.VISIBLE);
@@ -92,23 +92,15 @@ public class AdminAddNewMenuItemFragment extends Fragment {
 
             result = db.addDessert(name, category, price);
 
-        } else if (category.equals("Dodatki")) {
-            String priceStr = binding.adminAddNewMenuItemSinglePriceInput.getText().toString();
-            if (priceStr.isEmpty()) {
-                Toast.makeText(getContext(), "Podaj cenę", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            double price = Double.parseDouble(priceStr);
-            result = db.addAddon(name, "uniwersalny", price);
-
-        } else {
+        }
+        else {
 
             double priceS = getPriceFromInput(binding.inputPriceS);
             double priceM = getPriceFromInput(binding.inputPriceM);
             double priceL = getPriceFromInput(binding.inputPriceL);
 
             if (priceS == 0 && priceM == 0 && priceL == 0) {
-                Toast.makeText(getContext(), "Введіть хоча б одну ціну", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Wprowadź przynajmniej jedną cenę", Toast.LENGTH_SHORT).show();
                 return;
             }
 

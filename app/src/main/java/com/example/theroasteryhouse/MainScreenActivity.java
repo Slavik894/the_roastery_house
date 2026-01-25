@@ -56,7 +56,6 @@ public class MainScreenActivity extends AppCompatActivity {
         binding.leftPanelCoffeeBtn.setOnClickListener(v -> showMenuScreen("Kawa"));
         binding.leftPanelTeaBtn.setOnClickListener(v -> showMenuScreen("Herbata"));
         binding.leftPanelDessertsBtn.setOnClickListener(v -> showMenuScreen("Desery"));
-        binding.leftPanelAdditivesBtn.setOnClickListener(v -> showMenuScreen("Dodatki"));
         binding.leftPanelSettingsBtn.setOnClickListener(v -> {
             if ("settings".equals(binding.centerPanel.getTag())) {
                 return;

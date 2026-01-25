@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "coffee_app.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     public static final String TABLE_USERS = "users";
 
@@ -39,11 +39,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DESSERT_CATEGORY = "category";
     public static final String COLUMN_DESSERT_PRICE = "price";
 
-    public static final String TABLE_ADDONS = "addons";
-    public static final String COLUMN_ADDON_ID = "id";
-    public static final String COLUMN_ADDON_NAME = "name";
-    public static final String COLUMN_ADDON_TYPE = "type";
-    public static final String COLUMN_ADDON_PRICE = "price";
 
     public static final String TABLE_INGREDIENTS = "ingredients";
     public static final String COLUMN_INGREDIENT_ID = "id";
@@ -99,14 +94,6 @@ public void onCreate(SQLiteDatabase db) {
                 ")";
         db.execSQL(CREATE_DESSERTS_TABLE);
 
-        String CREATE_ADDONS_TABLE = "CREATE TABLE " + TABLE_ADDONS + "(" +
-                COLUMN_ADDON_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_ADDON_NAME + " TEXT NOT NULL," +
-                COLUMN_ADDON_TYPE + " TEXT NOT NULL," +
-                COLUMN_ADDON_PRICE + " REAL" +
-                ")";
-        db.execSQL(CREATE_ADDONS_TABLE);
-
     String CREATE_INGREDIENTS_TABLE = "CREATE TABLE " + TABLE_INGREDIENTS + "(" +
             COLUMN_INGREDIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_INGREDIENT_NAME + " TEXT NOT NULL," +
@@ -139,7 +126,6 @@ public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DRINKS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DESSERTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADDONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDER_DETAILS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS);
@@ -264,18 +250,6 @@ public long addDessert(String name, String category, double price) {
     return id;
 }
 
-public long addAddon(String name, String type, double price) {
-    SQLiteDatabase db = this.getWritableDatabase();
-    ContentValues values = new ContentValues();
-
-    values.put(COLUMN_ADDON_NAME, name);
-    values.put(COLUMN_ADDON_TYPE, type);
-    values.put(COLUMN_ADDON_PRICE, price);
-
-    long id = db.insert(TABLE_ADDONS, null, values);
-    db.close();
-    return id;
-}
 
 public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
