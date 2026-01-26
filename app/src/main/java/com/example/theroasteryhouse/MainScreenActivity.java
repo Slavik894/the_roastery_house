@@ -210,54 +210,61 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         }
 
-        private void showSizeDialog(MenuItem item) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View view = getLayoutInflater().inflate(R.layout.dialog_choose_size, null);
-            builder.setView(view);
+    private void showSizeDialog(MenuItem item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_choose_size, null);
+        builder.setView(view);
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
+        AlertDialog dialog = builder.create();
 
-            if (dialog.getWindow() != null) {
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            }
+        TextView title = view.findViewById(R.id.dialog_title);
+        android.widget.Button btnS = view.findViewById(R.id.btn_size_s);
+        android.widget.Button btnM = view.findViewById(R.id.btn_size_m);
+        android.widget.Button btnL = view.findViewById(R.id.btn_size_l);
+        android.widget.Button btnCancel = view.findViewById(R.id.btn_cancel);
 
+        title.setText(item.getName());
 
-            TextView title = dialog.findViewById(R.id.dialog_title);
-            android.widget.Button btnS = dialog.findViewById(R.id.btn_size_s);
-            android.widget.Button btnM = dialog.findViewById(R.id.btn_size_m);
-            android.widget.Button btnL = dialog.findViewById(R.id.btn_size_l);
-            android.widget.Button btnCancel = dialog.findViewById(R.id.btn_cancel);
-
-            title.setText(item.getName());
-
+        if (item.getPriceS() > 0) {
+            btnS.setVisibility(View.VISIBLE);
             btnS.setText(String.format("Small - %.2f zł", item.getPriceS()));
-            btnM.setText(String.format("Medium - %.2f zł", item.getPriceM()));
-            btnL.setText(String.format("Large - %.2f zł", item.getPriceL()));
-
             btnS.setOnClickListener(v -> {
                 addToOrderPanel(new OrderItem(item.getName(), "S", item.getPriceS()));
                 dialog.dismiss();
             });
-
-            btnM.setOnClickListener(v -> {
-                addToOrderPanel(new com.example.theroasteryhouse.models.OrderItem(item.getName(), "M", item.getPriceM()));
-                dialog.dismiss();
-            });
-
-            btnL.setOnClickListener(v -> {
-                addToOrderPanel(new com.example.theroasteryhouse.models.OrderItem(item.getName(), "L", item.getPriceL()));
-                dialog.dismiss();
-            });
-
-            btnCancel.setOnClickListener(v -> dialog.dismiss());
-
-            dialog.show();
-            if (dialog.getWindow() != null) {
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            }
-
+        } else {
+            btnS.setVisibility(View.GONE);
         }
+
+        if (item.getPriceM() > 0) {
+            btnM.setVisibility(View.VISIBLE);
+            btnM.setText(String.format("Medium - %.2f zł", item.getPriceM()));
+            btnM.setOnClickListener(v -> {
+                addToOrderPanel(new OrderItem(item.getName(), "M", item.getPriceM()));
+                dialog.dismiss();
+            });
+        } else {
+            btnM.setVisibility(View.GONE);
+        }
+
+        if (item.getPriceL() > 0) {
+            btnL.setVisibility(View.VISIBLE);
+            btnL.setText(String.format("Large - %.2f zł", item.getPriceL()));
+            btnL.setOnClickListener(v -> {
+                addToOrderPanel(new OrderItem(item.getName(), "L", item.getPriceL()));
+                dialog.dismiss();
+            });
+        } else {
+            btnL.setVisibility(View.GONE);
+        }
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+    }
 
         private void addToOrderPanel(com.example.theroasteryhouse.models.OrderItem item) {
             orderAdapter.addItem(item);

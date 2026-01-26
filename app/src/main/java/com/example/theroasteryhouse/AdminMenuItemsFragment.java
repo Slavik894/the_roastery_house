@@ -1,19 +1,15 @@
 package com.example.theroasteryhouse;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.theroasteryhouse.databinding.FragmentAdminMenuItemsBinding;
 import com.example.theroasteryhouse.models.MenuItem;
-
 import java.util.List;
 
 public class AdminMenuItemsFragment extends Fragment {
@@ -27,7 +23,7 @@ public class AdminMenuItemsFragment extends Fragment {
         binding = FragmentAdminMenuItemsBinding.inflate(inflater, container, false);
         db = new DatabaseHelper(requireContext());
 
-        loadMenuItems();
+        loadAllSections();
 
         binding.adminModeMenuItemsScreenAddNewItemButton.setOnClickListener(v -> {
             getParentFragmentManager()
@@ -40,11 +36,16 @@ public class AdminMenuItemsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void loadMenuItems() {
+    private void loadAllSections() {
+        setupSection(binding.recyclerCoffee, "Kawa");
+        setupSection(binding.recyclerTea, "Herbata");
+        setupSection(binding.recyclerDesserts, "Desery");
+    }
 
-        binding.adminModeMenuItemsRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
+    private void setupSection(RecyclerView recyclerView, String category) {
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
-        List<MenuItem> items = db.getAllMenuItems();
+        List<MenuItem> items = db.getMenuItemsByCategory(category);
 
         AdminMenuAdapter adapter = new AdminMenuAdapter(items, new AdminMenuAdapter.OnItemActionListener() {
             @Override
@@ -54,7 +55,7 @@ public class AdminMenuItemsFragment extends Fragment {
                 } else if (item.getType().equals("dessert")) {
                     db.deleteDessert(item.getId());
                 }
-                loadMenuItems();
+                loadAllSections();
             }
 
             @Override
@@ -69,7 +70,7 @@ public class AdminMenuItemsFragment extends Fragment {
             }
         });
 
-        binding.adminModeMenuItemsRecycler.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
