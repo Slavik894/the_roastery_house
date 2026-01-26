@@ -1,6 +1,5 @@
 package com.example.theroasteryhouse;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +7,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.theroasteryhouse.databinding.FragmentAdminIngredientsBinding;
 import com.example.theroasteryhouse.models.Ingredient;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdminIngredientsFragment extends Fragment {
@@ -23,7 +22,7 @@ public class AdminIngredientsFragment extends Fragment {
         binding = FragmentAdminIngredientsBinding.inflate(inflater, container, false);
         db = new DatabaseHelper(requireContext());
 
-        loadIngredients();
+        loadAllIngredients();
 
         binding.adminModeIngredientsScreenAddNewItemButton.setOnClickListener(v -> {
             getParentFragmentManager()
@@ -36,29 +35,25 @@ public class AdminIngredientsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void loadIngredients() {
-        binding.adminModeIngredientsRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        List<Ingredient> list = new ArrayList<>();
+    private void loadAllIngredients() {
+        setupSection(binding.recyclerBeans, "beans");
+        setupSection(binding.recyclerBase, "base");
+        setupSection(binding.recyclerMilk, "milk");
+        setupSection(binding.recyclerCoffeeAddons, "additive");
+        setupSection(binding.recyclerTeaLeaves, "tea_leaves");
+        setupSection(binding.recyclerTeaAddons, "tea_additive");
+    }
 
-        Cursor cursor = db.getAllIngredients();
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_ID));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_NAME));
-                String info = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_INFO));
-                String uri = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_IMAGE_URI));
-                String type = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_TYPE));
-                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_INGREDIENT_PRICE));
-                list.add(new Ingredient(id, name, info, uri, type, price));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
+    private void setupSection(RecyclerView recyclerView, String type) {
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+
+        List<Ingredient> list = db.getIngredientsByType(type);
 
         AdminIngredientsAdapter adapter = new AdminIngredientsAdapter(list, new AdminIngredientsAdapter.OnItemActionListener() {
             @Override
             public void onDelete(Ingredient item) {
                 db.deleteIngredient(item.getId());
-                loadIngredients();
+                loadAllIngredients();
             }
 
             @Override
@@ -72,6 +67,6 @@ public class AdminIngredientsFragment extends Fragment {
                         .commit();
             }
         });
-        binding.adminModeIngredientsRecycler.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 }
