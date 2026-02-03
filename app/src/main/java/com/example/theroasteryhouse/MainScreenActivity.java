@@ -78,7 +78,7 @@ public class MainScreenActivity extends AppCompatActivity {
         List<MenuItem> items = db.getMenuItemsByCategory(category);
 
         StandardMenuAdapter adapter = new StandardMenuAdapter(items, item -> {
-            onMenuItemClicked(item);
+            onMenuItemClicked(item, category);
         });
 
         menuBinding.menuRecycler.setAdapter(adapter);
@@ -95,47 +95,24 @@ public class MainScreenActivity extends AppCompatActivity {
         FragmentSettingsBinding settingsBinding =
                 FragmentSettingsBinding.inflate(getLayoutInflater());
 
-        settingsBinding.settingsPageNameInput.setText(currentName);
-        settingsBinding.settingsPageSurnameInput.setText(currentSurname);
-        settingsBinding.settingsPageEmailInput.setText(currentEmail);
         settingsBinding.settingsPagePasswordInput.setText(currentPassword);
 
         settingsBinding.settingsScreenCancelChangesButton.setOnClickListener(v -> {
-            settingsBinding.settingsPageNameInput.setText(currentName);
-            settingsBinding.settingsPageSurnameInput.setText(currentSurname);
-            settingsBinding.settingsPageEmailInput.setText(currentEmail);
             settingsBinding.settingsPagePasswordInput.setText(currentPassword);
                 });
         settingsBinding.settingsScreenSaveChangesButton.setOnClickListener(v -> {
-
-            String newName = settingsBinding.settingsPageNameInput.getText().toString().trim();
-            String newSurname = settingsBinding.settingsPageSurnameInput.getText().toString().trim();
-            String newEmail = settingsBinding.settingsPageEmailInput.getText().toString().trim();
             String newPassword = settingsBinding.settingsPagePasswordInput.getText().toString().trim();
 
-            if(newName.isEmpty() || newSurname.isEmpty() || newEmail.isEmpty()){
-                Toast.makeText(this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
+            if (newPassword.isEmpty()) {
+                Toast.makeText(this, "Hasło nie może być puste", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            boolean updateBasic = db.updateUserData(userId, newName, newSurname, newEmail);
-
-            boolean updatePassword = false;
-            if(!newPassword.isEmpty()) {
-                updatePassword = db.updateUserPassword(userId, newPassword);
+            boolean success = db.updateUserPassword(userId, newPassword);
+            if (success) {
                 currentPassword = newPassword;
-            }
-
-            if(updateBasic){
-                currentName = newName;
-                currentSurname = newSurname;
-                currentEmail = newEmail;
-            }
-
-            if(updateBasic || updatePassword){
-                Toast.makeText(this, "Zmiany zostały zapisane", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Hasło zostało zmienione", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Wystąpił błąd podczas zapisu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Błąd zapisu", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -200,17 +177,18 @@ public class MainScreenActivity extends AppCompatActivity {
         binding.rightPanelOrderRecycler.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
         binding.rightPanelOrderRecycler.setAdapter(orderAdapter);
     }
-        private void onMenuItemClicked(MenuItem item) {
-            if ("dessert".equals(item.getType()) || "additive".equals(item.getType())) {
+        private void onMenuItemClicked(MenuItem item, String category) {
+            if ("dessert".equals(item.getType())) {
+                addCategoryHeaderIfNeeded("Desery");
                 OrderItem orderItem =
                         new OrderItem(item.getName(), "", item.getPriceSingle());
                 addToOrderPanel(orderItem);
             } else {
-                showSizeDialog(item);
+                showSizeDialog(item, category);
             }
         }
 
-    private void showSizeDialog(MenuItem item) {
+    private void showSizeDialog(MenuItem item, String categoryName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_choose_size, null);
         builder.setView(view);
@@ -229,6 +207,7 @@ public class MainScreenActivity extends AppCompatActivity {
             btnS.setVisibility(View.VISIBLE);
             btnS.setText(String.format("Small - %.2f zł", item.getPriceS()));
             btnS.setOnClickListener(v -> {
+                addCategoryHeaderIfNeeded(categoryName);
                 addToOrderPanel(new OrderItem(item.getName(), "S", item.getPriceS()));
                 dialog.dismiss();
             });
@@ -240,6 +219,7 @@ public class MainScreenActivity extends AppCompatActivity {
             btnM.setVisibility(View.VISIBLE);
             btnM.setText(String.format("Medium - %.2f zł", item.getPriceM()));
             btnM.setOnClickListener(v -> {
+                addCategoryHeaderIfNeeded(categoryName);
                 addToOrderPanel(new OrderItem(item.getName(), "M", item.getPriceM()));
                 dialog.dismiss();
             });
@@ -251,6 +231,7 @@ public class MainScreenActivity extends AppCompatActivity {
             btnL.setVisibility(View.VISIBLE);
             btnL.setText(String.format("Large - %.2f zł", item.getPriceL()));
             btnL.setOnClickListener(v -> {
+                addCategoryHeaderIfNeeded(categoryName);
                 addToOrderPanel(new OrderItem(item.getName(), "L", item.getPriceL()));
                 dialog.dismiss();
             });
@@ -332,6 +313,28 @@ public class MainScreenActivity extends AppCompatActivity {
             window.setLayout(
                     (int) (getResources().getDisplayMetrics().density * 800),
                     android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
+    private void addCategoryHeaderIfNeeded(String categoryName) {
+        String headerText = "--- " + categoryName + " ---";
+        java.util.List<OrderItem> items = orderAdapter.getItems();
+
+        if (items.isEmpty()) {
+            orderAdapter.addItem(new OrderItem(headerText));
+            return;
+        }
+
+        String lastHeaderText = "";
+        for (int i = items.size() - 1; i >= 0; i--) {
+            if (items.get(i).isHeader()) {
+                lastHeaderText = items.get(i).getDisplayName();
+                break;
+            }
+        }
+
+        if (!lastHeaderText.equals(headerText)) {
+            orderAdapter.addItem(new OrderItem(headerText));
         }
     }
 }
