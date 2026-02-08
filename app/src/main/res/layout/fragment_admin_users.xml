@@ -32,7 +32,7 @@
     <Button
         android:id="@+id/admin_mode_users_screen_add_new_user_button"
         android:layout_width="380dp"
-        android:layout_height="95dp"
+        android:layout_height="100dp"
         style="@style/CustomFormButton"
         app:layout_constraintTop_toBottomOf="@id/admin_mode_users_recycler"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -205,7 +205,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         if (item.getPriceS() > 0) {
             btnS.setVisibility(View.VISIBLE);
-            btnS.setText(String.format("Small - %.2f zł", item.getPriceS()));
+            btnS.setText(String.format("Mały - %.2f zł", item.getPriceS()));
             btnS.setOnClickListener(v -> {
                 addCategoryHeaderIfNeeded(categoryName);
                 addToOrderPanel(new OrderItem(item.getName(), "S", item.getPriceS()));
@@ -217,7 +217,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         if (item.getPriceM() > 0) {
             btnM.setVisibility(View.VISIBLE);
-            btnM.setText(String.format("Medium - %.2f zł", item.getPriceM()));
+            btnM.setText(String.format("Średni - %.2f zł", item.getPriceM()));
             btnM.setOnClickListener(v -> {
                 addCategoryHeaderIfNeeded(categoryName);
                 addToOrderPanel(new OrderItem(item.getName(), "M", item.getPriceM()));
@@ -229,7 +229,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         if (item.getPriceL() > 0) {
             btnL.setVisibility(View.VISIBLE);
-            btnL.setText(String.format("Large - %.2f zł", item.getPriceL()));
+            btnL.setText(String.format("Duży - %.2f zł", item.getPriceL()));
             btnL.setOnClickListener(v -> {
                 addCategoryHeaderIfNeeded(categoryName);
                 addToOrderPanel(new OrderItem(item.getName(), "L", item.getPriceL()));

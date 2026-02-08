@@ -20,7 +20,7 @@
         android:id="@+id/btn_size_s"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mały - 0.00 zł"
+        android:text=""
         android:textSize="16sp"
         style="@style/CustomFormButton"
         android:layout_marginBottom="10dp"/>
@@ -29,7 +29,7 @@
         android:id="@+id/btn_size_m"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Średni - 0.00 zł"
+        android:text=""
         android:textSize="16sp"
         style="@style/CustomFormButton"
         android:layout_marginBottom="10dp"/>
@@ -38,7 +38,7 @@
         android:id="@+id/btn_size_l"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Duży - 0.00 zł"
+        android:text=""
         android:textSize="16sp"
         style="@style/CustomFormButton"
         android:layout_marginBottom="20dp"/>

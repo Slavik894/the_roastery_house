@@ -65,7 +65,7 @@ public class AdminEditIngredientFragment extends Fragment {
 
         binding.adminEditIngredientImage.setOnClickListener(v -> openGallery());
         binding.adminEditIngredientSaveBtn.setOnClickListener(v -> saveChanges());
-        binding.adminEditIngredientCancelBtn.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        binding.adminEditIngredientDeleteBtn.setOnClickListener(v -> showDeleteIngredientDialog());
 
         return binding.getRoot();
     }
@@ -169,5 +169,34 @@ public class AdminEditIngredientFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Błąd zapisu", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showDeleteIngredientDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        View view = getLayoutInflater().inflate(R.layout.dialog_confirm_delete, null);
+        builder.setView(view);
+        android.app.AlertDialog dialog = builder.create();
+        android.widget.TextView message = view.findViewById(R.id.delete_window_title);
+        android.widget.Button btnYes = view.findViewById(R.id.delete_window_confirm_button);
+        android.widget.Button btnNo = view.findViewById(R.id.delete_window_cancel_button);
+
+        message.setText("Czy na pewno chcesz usunąć\n ten składnik?");
+
+        btnYes.setOnClickListener(v -> {
+            boolean success = db.deleteIngredient(ingredientId);
+
+            if (success) {
+                Toast.makeText(getContext(), "Składnik został usunięty", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Błąd podczas usuwania", Toast.LENGTH_SHORT).show();
+            }
+
+            dialog.dismiss();
+            getParentFragmentManager().popBackStack();
+        });
+
+        btnNo.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 }

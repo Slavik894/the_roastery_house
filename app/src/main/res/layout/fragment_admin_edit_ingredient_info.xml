@@ -149,14 +149,15 @@
         />
 
     <Button
-        android:id="@+id/admin_edit_ingredient_cancel_btn"
+        android:id="@+id/admin_edit_ingredient_delete_btn"
         android:layout_width="324dp"
         android:layout_height="68dp"
         style="@style/CustomFormButton"
+        android:backgroundTint="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/admin_edit_ingredient_vertical_line_1"
         android:layout_marginBottom="36dp"
-        android:text="Anuluj"
+        android:text="Usuń składnik"
         android:textSize="24sp"
         />
 
@@ -168,7 +169,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/admin_edit_ingredient_vertical_line_3"
         android:layout_marginBottom="36dp"
-        android:text="Zapisz"
+        android:text="Zapisz &amp; zamknij"
         android:textSize="24sp"
         />
 

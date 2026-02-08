@@ -35,7 +35,8 @@
         android:text="Liczba zamówień na dzisiaj"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="60dp"    />
+        android:layout_marginTop="60dp"
+        />
 
     <TextView
         android:id="@+id/order_number"
@@ -45,7 +46,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guideline_1"
         android:layout_marginTop="20dp"
-        android:text="0"
+        android:text=""
         android:textSize="20sp"
         />
 
@@ -67,7 +68,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBaseline_toBaselineOf="@id/standard_order_title"
         app:layout_constraintLeft_toRightOf="@id/standard_order_title"
-        android:text="0"
+        android:text=""
         android:textSize="20sp"
         />
 
@@ -89,7 +90,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBaseline_toBaselineOf="@id/special_order_title"
         app:layout_constraintLeft_toRightOf="@id/special_order_title"
-        android:text="0"
+        android:text=""
         android:textSize="20sp"
         />
 
@@ -110,7 +111,7 @@
         android:id="@+id/monthly_orders_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text=""
         app:layout_constraintTop_toBottomOf="@id/monthly_orders_title"
         app:layout_constraintLeft_toRightOf="@id/guideline_1"
         app:layout_constraintRight_toRightOf="parent"
@@ -136,7 +137,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBaseline_toBaselineOf="@id/monthly_standard_orders_title"
         app:layout_constraintLeft_toRightOf="@id/monthly_standard_orders_title"
-        android:text="0"
+        android:text=""
         android:textSize="20sp"
         />
 
@@ -156,7 +157,7 @@
         android:id="@+id/monthly_special_orders_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text=""
         app:layout_constraintBaseline_toBaselineOf="@id/monthly_special_orders_title"
         app:layout_constraintLeft_toRightOf="@id/monthly_special_orders_title"
         android:textSize="20sp"
@@ -167,7 +168,6 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="40dp"
-        android:background="#000000"
         app:layout_constraintTop_toBottomOf="@id/monthly_special_orders_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -177,7 +177,7 @@
         android:id="@+id/today_income_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dzisiejsze zyski"
+        android:text="Dzisiejsze obroty"
         app:layout_constraintTop_toBottomOf="@id/divider_horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guideline_1"
@@ -194,7 +194,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guideline_1"
         android:layout_marginTop="20dp"
-        android:text="TEST"
+        android:text=""
         android:textSize="20sp"
         />
 
@@ -202,7 +202,7 @@
         android:id="@+id/monthly_income_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Miesięczne zyski"
+        android:text="Miesięczne obroty"
         app:layout_constraintTop_toBottomOf="@id/divider_horizontal"
         app:layout_constraintLeft_toRightOf="@id/guideline_1"
         app:layout_constraintRight_toRightOf="parent"
@@ -215,7 +215,7 @@
         android:id="@+id/monthly_income_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEST"
+        android:text=""
         app:layout_constraintTop_toBottomOf="@id/monthly_income_title"
         app:layout_constraintLeft_toRightOf="@id/guideline_1"
         app:layout_constraintRight_toRightOf="parent"
