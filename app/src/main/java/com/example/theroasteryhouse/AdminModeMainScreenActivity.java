@@ -83,11 +83,7 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
                         showEditUserScreen(user);
                     }
 
-                    @Override
-                    public void onDelete(User user) {
-                        db.deleteUser(user.getId());
-                        showUsersScreen();
-                    }
+
                 });
 
         recyclerView.setAdapter(adapter);
@@ -183,13 +179,7 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
         });
 
         editBinding.adminEditDataScreenDeleteUserButton.setOnClickListener(v -> {
-            db.deleteUser(user.getId());
-            android.widget.Toast.makeText(
-                    this,
-                    "Użytkownik usunięty",
-                    android.widget.Toast.LENGTH_SHORT
-            ).show();
-            showUsersScreen();
+            showDeleteUserDialog(user);
         });
     }
 
@@ -218,6 +208,35 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.center_panel, new AdminFinancesFragment())
                 .commit();
+    }
+
+    private void showDeleteUserDialog(User user) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_confirm_delete, null);
+        builder.setView(view);
+        android.app.AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        android.widget.TextView message = view.findViewById(R.id.delete_window_title);
+        android.widget.Button btnYes = view.findViewById(R.id.delete_window_confirm_button);
+        android.widget.Button btnNo = view.findViewById(R.id.delete_window_cancel_button);
+
+        message.setText("Czy na pewno chcesz usunąć\n konto tego użytkownika?");
+
+
+        btnYes.setOnClickListener(v -> {
+            db.deleteUser(user.getId());
+            Toast.makeText(this, "Konto zostało usunięte", Toast.LENGTH_SHORT).show();
+            showUsersScreen();
+            dialog.dismiss();
+        });
+
+        btnNo.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
 

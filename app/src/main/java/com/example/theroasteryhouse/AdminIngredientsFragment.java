@@ -52,8 +52,7 @@ public class AdminIngredientsFragment extends Fragment {
         AdminIngredientsAdapter adapter = new AdminIngredientsAdapter(list, new AdminIngredientsAdapter.OnItemActionListener() {
             @Override
             public void onDelete(Ingredient item) {
-                db.deleteIngredient(item.getId());
-                loadAllIngredients();
+                showDeleteIngredientDialog(item);
             }
 
             @Override
@@ -65,6 +64,33 @@ public class AdminIngredientsFragment extends Fragment {
                         .replace(R.id.center_panel, editFragment)
                         .addToBackStack(null)
                         .commit();
+            }
+
+            private void showDeleteIngredientDialog(Ingredient item) {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+                View view = getLayoutInflater().inflate(R.layout.dialog_confirm_delete, null);
+                builder.setView(view);
+                android.app.AlertDialog dialog = builder.create();
+
+                if (dialog.getWindow() != null) {
+                    dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+                }
+
+                android.widget.TextView message = view.findViewById(R.id.delete_window_title);
+                android.widget.Button btnYes = view.findViewById(R.id.delete_window_confirm_button);
+                android.widget.Button btnNo = view.findViewById(R.id.delete_window_cancel_button);
+
+                message.setText("Czy na pewno chcesz usunąć\n ten składnik?");
+
+                btnYes.setOnClickListener(v -> {
+                    db.deleteIngredient(item.getId());
+                    loadAllIngredients();
+                    dialog.dismiss();
+                });
+
+                btnNo.setOnClickListener(v -> dialog.dismiss());
+
+                dialog.show();
             }
         });
         recyclerView.setAdapter(adapter);

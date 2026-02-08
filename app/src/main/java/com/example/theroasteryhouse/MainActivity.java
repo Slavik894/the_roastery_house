@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 if (userId != -1) {
                     Intent intent = new Intent(this, SelectOrderTypeActivity.class);
                     intent.putExtra("userId", userId);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    finish();
 
                 } else {
                     Toast.makeText(this, "Nieprawidłowe dane logowania", Toast.LENGTH_SHORT).show();
@@ -71,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
             }
             if(clickCounter == 5) {
                 Intent intent = new Intent(getApplicationContext(), AdminModeStartActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
             }
         });
 

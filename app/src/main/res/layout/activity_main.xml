@@ -56,6 +56,7 @@
         android:layout_marginTop="56dp"
         android:textSize="24sp"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         />
 
     <EditText
@@ -68,6 +69,7 @@
         android:layout_marginTop="28dp"
         android:textSize="24sp"
         android:hint="Hasło"
+        android:inputType="textPassword"
         />
     
     <Button

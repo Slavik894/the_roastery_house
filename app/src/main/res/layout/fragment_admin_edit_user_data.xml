@@ -132,6 +132,7 @@
         android:layout_marginLeft="80dp"
         style="@style/CustomFormButton"
         android:text="Usuń użytkownika"
+        android:backgroundTint="@color/red"
         android:textSize="24sp"
         />
 

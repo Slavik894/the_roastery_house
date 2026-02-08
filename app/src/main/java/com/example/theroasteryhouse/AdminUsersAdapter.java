@@ -15,7 +15,6 @@ public class AdminUsersAdapter extends RecyclerView.Adapter<AdminUsersAdapter.Us
 
     public interface OnUserActionListener {
         void onEdit(User user);
-        void onDelete(User user);
     }
 
     private List<User> users;
@@ -49,11 +48,6 @@ public class AdminUsersAdapter extends RecyclerView.Adapter<AdminUsersAdapter.Us
             }
         });
 
-        holder.binding.userDeleteButton.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onDelete(user);
-            }
-        });
     }
 
     @Override
