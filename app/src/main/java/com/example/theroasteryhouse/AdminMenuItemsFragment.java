@@ -48,10 +48,6 @@ public class AdminMenuItemsFragment extends Fragment {
         List<MenuItem> items = db.getMenuItemsByCategory(category);
 
         AdminMenuAdapter adapter = new AdminMenuAdapter(items, new AdminMenuAdapter.OnItemActionListener() {
-            @Override
-            public void onDelete(MenuItem item) {
-                showDeleteMenuItemDialog(item);
-            }
 
             @Override
             public void onInfo(MenuItem item) {
@@ -72,36 +68,5 @@ public class AdminMenuItemsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    private void showDeleteMenuItemDialog(MenuItem item) {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
-        View view = getLayoutInflater().inflate(R.layout.dialog_confirm_delete, null);
-        builder.setView(view);
-        android.app.AlertDialog dialog = builder.create();
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
-        }
-
-        android.widget.TextView message = view.findViewById(R.id.delete_window_title);
-        android.widget.Button btnYes = view.findViewById(R.id.delete_window_confirm_button);
-        android.widget.Button btnNo = view.findViewById(R.id.delete_window_cancel_button);
-
-        message.setText("Czy na pewno chcesz usunąć\n tę pozycję z menu?");
-
-        btnYes.setOnClickListener(v -> {
-            if (item.getType().equals("drink")) {
-                db.deleteDrink(item.getId());
-            } else if (item.getType().equals("dessert")) {
-                db.deleteDessert(item.getId());
-            }
-            loadAllSections();
-            dialog.dismiss();
-        });
-
-        btnNo.setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
     }
 }

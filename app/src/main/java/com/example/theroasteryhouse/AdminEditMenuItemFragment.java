@@ -18,7 +18,7 @@ public class AdminEditMenuItemFragment extends Fragment {
 
     private FragmentAdminEditMenuItemBinding binding;
     private DatabaseHelper db;
-    private final String[] categories = {"Kawa", "Herbata", "Desery", "Dodatki"};
+    private final String[] categories = {"Kawa", "Herbata", "Desery"};
 
     private int itemId;
     private String itemType;
@@ -133,13 +133,7 @@ public class AdminEditMenuItemFragment extends Fragment {
 
     private void setupButtons() {
         binding.adminEditMenuItemBtnDelete.setOnClickListener(v -> {
-            if ("drink".equals(itemType)) {
-                db.deleteDrink(itemId);
-            } else {
-                db.deleteDessert(itemId);
-            }
-            Toast.makeText(getContext(), "Pozycja została usunięta", Toast.LENGTH_SHORT).show();
-            getParentFragmentManager().popBackStack();
+            showDeleteMenuItemDialog();
         });
 
         binding.adminEditMenuItemBtnSave.setOnClickListener(v -> saveChanges());
@@ -182,4 +176,40 @@ public class AdminEditMenuItemFragment extends Fragment {
             return 0.0;
         }
     }
+
+    private void showDeleteMenuItemDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        View view = getLayoutInflater().inflate(R.layout.dialog_confirm_delete, null);
+        builder.setView(view);
+        android.app.AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        android.widget.TextView message = view.findViewById(R.id.delete_window_title);
+        android.widget.Button btnYes = view.findViewById(R.id.delete_window_confirm_button);
+        android.widget.Button btnNo = view.findViewById(R.id.delete_window_cancel_button);
+
+        message.setText("Czy na pewno chcesz usunąć\n tę pozycję menu?");
+
+        btnYes.setOnClickListener(v -> {
+            if ("drink".equals(itemType)) {
+                db.deleteDrink(itemId);
+            } else if ("dessert".equals(itemType)) {
+                db.deleteDessert(itemId);
+            }
+
+            Toast.makeText(getContext(), "Pozycja usunięta", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+
+            getParentFragmentManager().popBackStack();
+        });
+
+        btnNo.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+
 }

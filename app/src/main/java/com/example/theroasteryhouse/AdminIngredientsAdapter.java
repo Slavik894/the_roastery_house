@@ -35,7 +35,6 @@ public class AdminIngredientsAdapter extends RecyclerView.Adapter<AdminIngredien
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Ingredient item = list.get(position);
         holder.binding.menuItemName.setText(item.getName());
-        holder.binding.menuItemDeleteBtn.setOnClickListener(v -> listener.onDelete(item));
         holder.binding.menuItemInfoBtn.setOnClickListener(v -> listener.onInfo(item));
     }
 

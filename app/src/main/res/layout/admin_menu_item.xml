@@ -23,15 +23,15 @@
         android:layout_marginBottom="8dp"
         android:textColor="@color/functional_buttons_text_color"
         android:background="@color/menu_item_background"
-        android:text="TEST"
+        android:text=""
         android:textSize="20sp"
         />
 
     <Button
         android:id="@+id/menu_item_info_btn"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toTopOf="@id/menu_item_delete_btn"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         style="@style/CustomFormButton"
@@ -39,17 +39,6 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="4dp"
-        />
-
-    <ImageButton
-        android:id="@+id/menu_item_delete_btn"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:src="@drawable/delete"
-        style="@style/CustomFormButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

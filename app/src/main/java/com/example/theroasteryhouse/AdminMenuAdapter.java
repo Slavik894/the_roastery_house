@@ -16,7 +16,6 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Menu
     private OnItemActionListener listener;
 
     public interface OnItemActionListener {
-        void onDelete(MenuItem item);
         void onInfo(MenuItem item);
     }
 
@@ -38,7 +37,6 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Menu
     public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
         MenuItem item = items.get(position);
 
-        holder.binding.menuItemDeleteBtn.setOnClickListener(v -> listener.onDelete(item));
         holder.binding.menuItemInfoBtn.setOnClickListener(v -> listener.onInfo(item));
         holder.binding.menuItemName.setText(item.getName());
     }
