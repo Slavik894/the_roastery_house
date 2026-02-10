@@ -47,7 +47,23 @@ public class MainScreenActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
 
         db = new DatabaseHelper(this);
-        userId = getIntent().getIntExtra("userId", -1);
+        if (savedInstanceState != null) {
+            userId = savedInstanceState.getInt("saved_userId", -1);
+            totalPrice = savedInstanceState.getDouble("saved_totalPrice", 0.0);
+
+            if (savedInstanceState.containsKey("saved_password")) {
+                currentPassword = savedInstanceState.getString("saved_password");
+            }
+        } else {
+            userId = getIntent().getIntExtra("userId", -1);
+        }
+        if (userId == -1) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         loadUserData();
 
         setupOrderPanel();
@@ -172,6 +188,7 @@ public class MainScreenActivity extends AppCompatActivity {
             OrderItem item = orderAdapter.getItems().get(position);
             totalPrice -= item.getPrice();
             orderAdapter.removeItem(position);
+            removeEmptyHeaders();
             updateTotalText();
         });
         binding.rightPanelOrderRecycler.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
@@ -310,9 +327,11 @@ public class MainScreenActivity extends AppCompatActivity {
 
         android.view.Window window = dialog.getWindow();
         if (window != null) {
+            int screenHeight = getResources().getDisplayMetrics().heightPixels;
             window.setLayout(
                     (int) (getResources().getDisplayMetrics().density * 800),
-                    android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+                    (int) (screenHeight * 0.85)
+            );
         }
     }
 
@@ -335,6 +354,34 @@ public class MainScreenActivity extends AppCompatActivity {
 
         if (!lastHeaderText.equals(headerText)) {
             orderAdapter.addItem(new OrderItem(headerText));
+        }
+    }
+
+    private void removeEmptyHeaders() {
+        java.util.List<OrderItem> items = orderAdapter.getItems();
+
+        for (int i = items.size() - 1; i >= 0; i--) {
+            OrderItem item = items.get(i);
+
+            if (item.getDisplayName().startsWith("---")) {
+
+                if (i == items.size() - 1) {
+                    orderAdapter.removeItem(i);
+                }
+                else if (items.get(i + 1).getDisplayName().startsWith("---")) {
+                    orderAdapter.removeItem(i);
+                }
+            }
+        }
+    }
+    @Override
+    protected void onSaveInstanceState(@androidx.annotation.NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("saved_userId", userId);
+        outState.putDouble("saved_totalPrice", totalPrice);
+
+        if (currentPassword != null) {
+            outState.putString("saved_password", currentPassword);
         }
     }
 }
