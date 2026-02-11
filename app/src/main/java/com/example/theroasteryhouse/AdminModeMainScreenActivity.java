@@ -38,6 +38,7 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
         binding.adminLeftPanelMenuItemsBtn.setOnClickListener(v -> showMenuItemsScreen());
         binding.adminLeftPanelIngredientsBtn.setOnClickListener(v -> showIngredientsScreen());
         binding.adminLeftPanelFinancesBtn.setOnClickListener(v -> showFinancesScreen());
+        binding.adminLeftPanelSettingsBtn.setOnClickListener(v -> showSettingsScreen());
         binding.adminLeftPanelExitBtn.setOnClickListener(view -> {
             Intent intent = new Intent(AdminModeMainScreenActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -237,6 +238,34 @@ public class AdminModeMainScreenActivity extends AppCompatActivity {
         btnNo.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
+    }
+
+    private void showSettingsScreen() {
+        com.example.theroasteryhouse.databinding.FragmentAdminSettingsBinding settingsBinding =
+                com.example.theroasteryhouse.databinding.FragmentAdminSettingsBinding.inflate(getLayoutInflater());
+
+        binding.centerPanel.removeAllViews();
+        binding.centerPanel.addView(settingsBinding.getRoot());
+
+        settingsBinding.adminSettingsConfirmBtn.setOnClickListener(v -> {
+            String newPassword = settingsBinding.etAdminPassword.getText().toString().trim();
+
+            if (newPassword.isEmpty()) {
+                Toast.makeText(this, "Hasło nie może być puste", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            getSharedPreferences("AdminPrefs", MODE_PRIVATE)
+                    .edit()
+                    .putString("admin_password", newPassword)
+                    .apply();
+
+            Toast.makeText(this, "Hasło administratora zostało zmienione", Toast.LENGTH_SHORT).show();
+            settingsBinding.etAdminPassword.setText("");
+        });
+
+        settingsBinding.adminSettingsCancelBtn.setOnClickListener(v -> {
+            showUsersScreen();
+        });
     }
 
 
