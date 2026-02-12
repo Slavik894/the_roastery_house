@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "coffee_app.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public static final String TABLE_USERS = "users";
 
@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DRINK_PRICE_S = "price_small";
     public static final String COLUMN_DRINK_PRICE_M = "price_medium";
     public static final String COLUMN_DRINK_PRICE_L = "price_large";
+    public static final String COLUMN_MENU_IMAGE_URI = "image_uri";
 
     public static final String TABLE_DESSERTS = "desserts";
     public static final String COLUMN_DESSERT_ID = "id";
@@ -82,7 +83,8 @@ public void onCreate(SQLiteDatabase db) {
                 COLUMN_DRINK_CATEGORY + " TEXT NOT NULL," +
                 COLUMN_DRINK_PRICE_S + " REAL," +
                 COLUMN_DRINK_PRICE_M + " REAL," +
-                COLUMN_DRINK_PRICE_L + " REAL" +
+                COLUMN_DRINK_PRICE_L + " REAL," +
+                COLUMN_MENU_IMAGE_URI + " TEXT" +
                 ")";
         db.execSQL(CREATE_DRINKS_TABLE);
 
@@ -90,7 +92,8 @@ public void onCreate(SQLiteDatabase db) {
                 COLUMN_DESSERT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_DESSERT_NAME + " TEXT NOT NULL," +
                 COLUMN_DESSERT_CATEGORY + " TEXT NOT NULL," +
-                COLUMN_DESSERT_PRICE + " REAL" +
+                COLUMN_DESSERT_PRICE + " REAL," +
+                COLUMN_MENU_IMAGE_URI + " TEXT" +
                 ")";
         db.execSQL(CREATE_DESSERTS_TABLE);
 
@@ -129,6 +132,8 @@ public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDER_DETAILS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDERS);
+        db.execSQL("ALTER TABLE " + TABLE_DRINKS + " ADD COLUMN " + COLUMN_MENU_IMAGE_URI + " TEXT");
+        db.execSQL("ALTER TABLE " + TABLE_DESSERTS + " ADD COLUMN " + COLUMN_MENU_IMAGE_URI + " TEXT");
         onCreate(db);
 
 }
@@ -217,7 +222,7 @@ public Cursor getUserById(int userId) {
 
     }
 
-public long addDrink(String name, String category, double priceSmall, double priceMedium, double priceLarge) {
+public long addDrink(String name, String category, double priceSmall, double priceMedium, double priceLarge, String imageUri) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
 
@@ -226,6 +231,7 @@ public long addDrink(String name, String category, double priceSmall, double pri
     values.put(COLUMN_DRINK_PRICE_S, priceSmall);
     values.put(COLUMN_DRINK_PRICE_M, priceMedium);
     values.put(COLUMN_DRINK_PRICE_L, priceLarge);
+    values.put(COLUMN_MENU_IMAGE_URI, imageUri);
 
     long id = db.insert(TABLE_DRINKS, null, values);
     db.close();
@@ -237,13 +243,14 @@ public Cursor getDrinksByCategory(String category) {
     return db.query(TABLE_DRINKS, null, COLUMN_DRINK_CATEGORY + " = ?", new String[]{category}, null, null, COLUMN_DRINK_NAME + " ASC");
     }
 
-public long addDessert(String name, String category, double price) {
+public long addDessert(String name, String category, double price, String imageUri) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
 
     values.put(COLUMN_DESSERT_NAME, name);
     values.put(COLUMN_DESSERT_CATEGORY, category);
     values.put(COLUMN_DESSERT_PRICE, price);
+    values.put(COLUMN_MENU_IMAGE_URI, imageUri);
 
     long id = db.insert(TABLE_DESSERTS, null, values);
     db.close();
@@ -301,7 +308,7 @@ public List<User> getAllUsers() {
             do {
                 int id = drinksCursor.getInt(drinksCursor.getColumnIndexOrThrow(COLUMN_DRINK_ID));
                 String name = drinksCursor.getString(drinksCursor.getColumnIndexOrThrow(COLUMN_DRINK_NAME));
-                items.add(new MenuItem(id, name, "drink", 0.0, 0.0, 0.0));
+                items.add(new MenuItem(id, name, "drink", 0.0, 0.0, 0.0, null));
             } while (drinksCursor.moveToNext());
         }
         drinksCursor.close();
@@ -344,7 +351,7 @@ public List<User> getAllUsers() {
     }
 
 
-    public boolean updateDrink(int id, String name, String category, double priceS, double priceM, double priceL) {
+    public boolean updateDrink(int id, String name, String category, double priceS, double priceM, double priceL, String imageUri) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_DRINK_NAME, name);
@@ -352,18 +359,20 @@ public List<User> getAllUsers() {
         values.put(COLUMN_DRINK_PRICE_S, priceS);
         values.put(COLUMN_DRINK_PRICE_M, priceM);
         values.put(COLUMN_DRINK_PRICE_L, priceL);
+        values.put(COLUMN_MENU_IMAGE_URI, imageUri);
 
         int result = db.update(TABLE_DRINKS, values, COLUMN_DRINK_ID + "=?", new String[]{String.valueOf(id)});
         db.close();
         return result > 0;
     }
 
-    public boolean updateDessert(int id, String name, String category, double price) {
+    public boolean updateDessert(int id, String name, String category, double price, String imageUri) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_DESSERT_NAME, name);
         values.put(COLUMN_DESSERT_CATEGORY, category);
         values.put(COLUMN_DESSERT_PRICE, price);
+        values.put(COLUMN_MENU_IMAGE_URI, imageUri);
 
         int result = db.update(TABLE_DESSERTS, values, COLUMN_DESSERT_ID + "=?", new String[]{String.valueOf(id)});
         db.close();
@@ -451,7 +460,8 @@ public List<User> getAllUsers() {
                     int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_ID));
                     String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_NAME));
                     double price = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DESSERT_PRICE));
-                    items.add(new MenuItem(id, name, "dessert", price));
+                    String imageUri = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MENU_IMAGE_URI));
+                    items.add(new MenuItem(id, name, "dessert", price, 0.0, 0.0, imageUri));
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -470,7 +480,9 @@ public List<User> getAllUsers() {
                     double priceS = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DRINK_PRICE_S));
                     double priceM = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DRINK_PRICE_M));
                     double priceL = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_DRINK_PRICE_L));
-                    items.add(new MenuItem(id, name, "drink", priceS, priceM, priceL));
+
+                    String imageUri = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MENU_IMAGE_URI));
+                    items.add(new MenuItem(id, name, "drink", priceS, priceM, priceL, imageUri));
                 } while (cursor.moveToNext());
             }
             cursor.close();

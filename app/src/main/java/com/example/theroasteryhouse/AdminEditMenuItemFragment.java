@@ -22,6 +22,8 @@ public class AdminEditMenuItemFragment extends Fragment {
 
     private int itemId;
     private String itemType;
+    private String currentItemImageUri;
+
     public static AdminEditMenuItemFragment newInstance(int id, String type) {
         AdminEditMenuItemFragment fragment = new AdminEditMenuItemFragment();
         Bundle args = new Bundle();
@@ -88,6 +90,7 @@ public class AdminEditMenuItemFragment extends Fragment {
                     double priceS = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DRINK_PRICE_S));
                     double priceM = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DRINK_PRICE_M));
                     double priceL = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DRINK_PRICE_L));
+                    currentItemImageUri = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MENU_IMAGE_URI));
 
                     binding.adminEditMenuItemNameInput.setText(name);
                     setSpinnerToValue(category);
@@ -111,6 +114,7 @@ public class AdminEditMenuItemFragment extends Fragment {
                     String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DESSERT_NAME));
                     String category = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DESSERT_CATEGORY));
                     double price = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DESSERT_PRICE));
+                    currentItemImageUri = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MENU_IMAGE_URI));
 
                     binding.adminEditMenuItemNameInput.setText(name);
                     setSpinnerToValue(category);
@@ -152,13 +156,13 @@ public class AdminEditMenuItemFragment extends Fragment {
 
         if (category.equals("Desery") || category.equals("Dodatki")) {
             double price = getPriceFromInput(binding.adminEditMenuItemSinglePriceInput);
-            success = db.updateDessert(itemId, name, category, price);
+            success = db.updateDessert(itemId, name, category, price, currentItemImageUri);
         } else {
             double priceS = getPriceFromInput(binding.inputEditPriceS);
             double priceM = getPriceFromInput(binding.inputEditPriceM);
             double priceL = getPriceFromInput(binding.inputEditPriceL);
 
-            success = db.updateDrink(itemId, name, category, priceS, priceM, priceL);
+            success = db.updateDrink(itemId, name, category, priceS, priceM, priceL, currentItemImageUri);
         }
 
         if (success) {

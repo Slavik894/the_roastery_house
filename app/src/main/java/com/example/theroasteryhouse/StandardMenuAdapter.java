@@ -38,6 +38,17 @@ public class StandardMenuAdapter extends RecyclerView.Adapter<StandardMenuAdapte
         MenuItem item = items.get(position);
         holder.binding.standardMenuItemName.setText(item.getName());
 
+
+        if (item.getImageUri() != null && !item.getImageUri().isEmpty()) {
+            try {
+                holder.binding.menuItemImage.setImageURI(android.net.Uri.parse(item.getImageUri()));
+            } catch (Exception e) {
+                holder.binding.menuItemImage.setImageResource(R.drawable.logo);
+            }
+        } else {
+            holder.binding.menuItemImage.setImageResource(R.drawable.logo);
+        }
+
         holder.itemView.setOnClickListener(v -> listener.onItemClick(item));
     }
 

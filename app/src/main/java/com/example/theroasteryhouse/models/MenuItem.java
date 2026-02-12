@@ -8,14 +8,16 @@ public class MenuItem {
     private double priceL;
 
     private double priceSingle;
+    private String imageUri;
 
-    public MenuItem(int id, String name, String type, double priceS, double priceM, double priceL) {
+    public MenuItem(int id, String name, String type, double priceS, double priceM, double priceL, String imageUri) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.priceS = priceS;
         this.priceM = priceM;
         this.priceL = priceL;
+        this.imageUri = imageUri;
     }
 
     public MenuItem(int id, String name, String type, double priceSingle) {
@@ -33,4 +35,5 @@ public class MenuItem {
     public double getPriceM() { return priceM; }
     public double getPriceL() { return priceL; }
     public double getPriceSingle() { return priceSingle; }
+    public String getImageUri() { return imageUri; }
 }
