@@ -1,6 +1,9 @@
 package com.example.theroasteryhouse;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -23,6 +28,26 @@ public class AdminEditMenuItemFragment extends Fragment {
     private int itemId;
     private String itemType;
     private String currentItemImageUri;
+
+    // Лаунчер для вибору фото
+    private final ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri newUri = result.getData().getData();
+                    try {
+                        // Надаємо права на постійний доступ до файлу
+                        requireContext().getContentResolver().takePersistableUriPermission(
+                                newUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
+                    // Зберігаємо URI у змінну та оновлюємо картинку на екрані
+                    currentItemImageUri = newUri.toString();
+                    binding.adminEditMenuItemImage.setImageURI(newUri);
+                }
+            }
+    );
 
     public static AdminEditMenuItemFragment newInstance(int id, String type) {
         AdminEditMenuItemFragment fragment = new AdminEditMenuItemFragment();
@@ -47,6 +72,8 @@ public class AdminEditMenuItemFragment extends Fragment {
         setupSpinner();
         loadItemData();
         setupButtons();
+
+        binding.adminEditMenuItemImage.setOnClickListener(v -> openGallery());
 
         return binding.getRoot();
     }
@@ -92,6 +119,7 @@ public class AdminEditMenuItemFragment extends Fragment {
                     double priceL = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DRINK_PRICE_L));
                     currentItemImageUri = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_MENU_IMAGE_URI));
 
+
                     binding.adminEditMenuItemNameInput.setText(name);
                     setSpinnerToValue(category);
 
@@ -107,6 +135,15 @@ public class AdminEditMenuItemFragment extends Fragment {
                         binding.cbEditSizeL.setChecked(true);
                         binding.inputEditPriceL.setText(String.valueOf(priceL));
                     }
+                    if (currentItemImageUri != null && !currentItemImageUri.isEmpty()) {
+                        try {
+                            binding.adminEditMenuItemImage.setImageURI(Uri.parse(currentItemImageUri));
+                        } catch (Exception e) {
+                            binding.adminEditMenuItemImage.setImageResource(R.drawable.logo);
+                        }
+                    } else {
+                        binding.adminEditMenuItemImage.setImageResource(R.drawable.logo);
+                    }
                 }
             } else if ("dessert".equals(itemType)) {
                 cursor = db.getDessertById(itemId);
@@ -119,6 +156,16 @@ public class AdminEditMenuItemFragment extends Fragment {
                     binding.adminEditMenuItemNameInput.setText(name);
                     setSpinnerToValue(category);
                     binding.adminEditMenuItemSinglePriceInput.setText(String.valueOf(price));
+
+                    if (currentItemImageUri != null && !currentItemImageUri.isEmpty()) {
+                        try {
+                            binding.adminEditMenuItemImage.setImageURI(Uri.parse(currentItemImageUri));
+                        } catch (Exception e) {
+                            binding.adminEditMenuItemImage.setImageResource(R.drawable.logo);
+                        }
+                    } else {
+                        binding.adminEditMenuItemImage.setImageResource(R.drawable.logo);
+                    }
                 }
             }
         } finally {
@@ -213,6 +260,12 @@ public class AdminEditMenuItemFragment extends Fragment {
         btnNo.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
+    }
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        pickImageLauncher.launch(intent);
     }
 
 
