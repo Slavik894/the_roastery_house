@@ -27,6 +27,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginLeft="80dp"
         android:backgroundTint="@color/menu_item_background"
+        android:scaleType="centerCrop"
         />
 
     <androidx.constraintlayout.widget.Guideline

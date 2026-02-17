@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.theroasteryhouse.databinding.ActivitySpecialModeMainScreenBinding;
 import com.example.theroasteryhouse.models.Ingredient;
+import com.example.theroasteryhouse.models.MenuItem;
 import com.example.theroasteryhouse.models.OrderItem;
 
 import java.util.ArrayList;
@@ -213,9 +214,31 @@ public class SpecialModeMainScreenActivity extends AppCompatActivity {
         drinksCounter++;
         refreshRightPanelList();
     }
-    public void addDessertToOrder(Ingredient dessert) {
-        confirmedItems.add(new OrderItem("--- Deser ---"));
-        confirmedItems.add(new OrderItem(dessert.getName(), "", dessert.getPrice()));
+    public void addDessertToOrder(MenuItem dessert) {
+        boolean needsHeader = true;
+
+        if (!confirmedItems.isEmpty()) {
+            for (int i = confirmedItems.size() - 1; i >= 0; i--) {
+                OrderItem item = confirmedItems.get(i);
+
+                if (item.getName().startsWith("--- ")) {
+                    if (item.getName().equals("--- Deser ---")) {
+                        needsHeader = false;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (needsHeader) {
+            confirmedItems.add(new OrderItem("--- Deser ---"));
+        }
+
+        double correctPrice = dessert.getPriceSingle();
+        if (correctPrice == 0.0) {
+            correctPrice = dessert.getPriceS();
+        }
+        confirmedItems.add(new OrderItem(dessert.getName(), "", correctPrice));
         refreshRightPanelList();
     }
 

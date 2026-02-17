@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.theroasteryhouse.databinding.ItemStandardMenuBinding;
 import com.example.theroasteryhouse.models.Ingredient;
+import com.example.theroasteryhouse.models.MenuItem;
 
 import java.util.List;
 
 public class SpecialDessertsAdapter extends RecyclerView.Adapter<SpecialDessertsAdapter.ViewHolder> {
 
     public interface OnDessertActionListener {
-        void onChoose(Ingredient dessert);
+        void onChoose(MenuItem dessert);
     }
 
-    private final List<Ingredient> desserts;
+    private final List<MenuItem> desserts;
     private final OnDessertActionListener listener;
 
-    public SpecialDessertsAdapter(List<Ingredient> desserts, OnDessertActionListener listener) {
+    public SpecialDessertsAdapter(List<MenuItem> desserts, OnDessertActionListener listener) {
         this.desserts = desserts;
         this.listener = listener;
     }
@@ -36,10 +37,25 @@ public class SpecialDessertsAdapter extends RecyclerView.Adapter<SpecialDesserts
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Ingredient dessert = desserts.get(position);
+        MenuItem dessert = desserts.get(position);
         holder.binding.standardMenuItemName.setText(dessert.getName());
 
-        holder.binding.standardMenuItemName.setOnClickListener(v -> {
+        String uriString = dessert.getImageUri();
+
+        if (uriString != null && !uriString.trim().isEmpty() && !uriString.equals("null")) {
+            try {
+                holder.binding.menuItemImage.setImageURI(android.net.Uri.parse(uriString));
+
+                if (holder.binding.menuItemImage.getDrawable() == null) {
+                    holder.binding.menuItemImage.setImageResource(R.drawable.logo);
+                }
+            } catch (Exception e) {
+                holder.binding.menuItemImage.setImageResource(R.drawable.logo);
+            }
+        } else {
+            holder.binding.menuItemImage.setImageResource(R.drawable.logo);
+        }
+        holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onChoose(dessert);
             }

@@ -33,6 +33,7 @@
         app:layout_constraintLeft_toRightOf="@id/admin_edit_ingredient_vertical_line_1"
         android:layout_marginTop="80dp"
         android:backgroundTint="@color/menu_item_background"
+        android:scaleType="centerCrop"
         />
 
     <androidx.constraintlayout.widget.Guideline

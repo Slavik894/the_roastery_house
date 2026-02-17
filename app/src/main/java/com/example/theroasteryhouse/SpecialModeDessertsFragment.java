@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
-import com.example.theroasteryhouse.models.Ingredient;
 import com.example.theroasteryhouse.models.MenuItem;
 
 import java.util.ArrayList;
@@ -34,12 +33,8 @@ public class SpecialModeDessertsFragment extends Fragment {
     private void setupDessertsList() {
         List<MenuItem> menuItems = db.getMenuItemsByCategory("Desery");
 
-        List<Ingredient> ingredients = new ArrayList<>();
-        for (MenuItem m : menuItems) {
-            ingredients.add(new Ingredient(m.getId(), m.getName(), "Pyszny deser", "", "dessert", m.getPriceSingle()));
-        }
         SpecialDessertsAdapter adapter = new SpecialDessertsAdapter(
-                ingredients,
+                menuItems,
                 dessert -> {
                     if (getActivity() instanceof SpecialModeMainScreenActivity) {
                         ((SpecialModeMainScreenActivity) getActivity())
