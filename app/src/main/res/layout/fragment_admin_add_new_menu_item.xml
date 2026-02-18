@@ -26,8 +26,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="100dp"
         android:layout_marginLeft="80dp"
-        android:backgroundTint="@color/menu_item_background"
-        android:scaleType="centerCrop"
+        android:src="@drawable/logo"
         />
 
     <androidx.constraintlayout.widget.Guideline
