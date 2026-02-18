@@ -197,8 +197,14 @@ public class MainScreenActivity extends AppCompatActivity {
         private void onMenuItemClicked(MenuItem item, String category) {
             if ("dessert".equals(item.getType())) {
                 addCategoryHeaderIfNeeded("Desery");
+
+                double correctPrice = item.getPriceSingle();
+                if (correctPrice == 0.0) {
+                    correctPrice = item.getPriceS();
+                }
+
                 OrderItem orderItem =
-                        new OrderItem(item.getName(), "", item.getPriceSingle());
+                        new OrderItem(item.getName(), "", correctPrice);
                 addToOrderPanel(orderItem);
             } else {
                 showSizeDialog(item, category);

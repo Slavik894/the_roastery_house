@@ -32,8 +32,7 @@
         app:layout_constraintTop_toBottomOf="@id/sp_mode_ingredient_info_title"
         app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_info_vertical_line_1"
         android:layout_marginTop="80dp"
-        android:backgroundTint="@color/menu_item_background"
-        android:scaleType="centerCrop"
+        android:backgroundTint="@color/main_background_color"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -64,7 +63,7 @@
         app:layout_constraintLeft_toRightOf="@id/sp_mode_ingredient_name_title"
         android:layout_marginLeft="20dp"
         android:textSize="24sp"
-        android:text="TEST"
+        android:text=""
         />
 
     <TextView
@@ -87,7 +86,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/sp_mode_ingredient_type_title"
         android:layout_marginLeft="20dp"
         android:textSize="24sp"
-        android:text="TEST"
+        android:text=""
         />
     <TextView
         android:id="@+id/sp_mode_ingredient_price_title"
@@ -108,7 +107,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/sp_mode_ingredient_price_title"
         android:layout_marginLeft="20dp"
         android:textSize="24sp"
-        android:text="TEST"
+        android:text=""
         />
 
     <TextView
