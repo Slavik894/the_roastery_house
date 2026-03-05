@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,9 +1,11 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.theroasteryhouse.R;
 import com.example.theroasteryhouse.databinding.ItemStandardMenuBinding;
 import com.example.theroasteryhouse.models.MenuItem;
 import java.util.List;

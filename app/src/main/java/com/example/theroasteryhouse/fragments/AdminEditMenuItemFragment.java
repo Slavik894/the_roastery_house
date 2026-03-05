@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.theroasteryhouse.R;
+import com.example.theroasteryhouse.database.DatabaseHelper;
 import com.example.theroasteryhouse.databinding.FragmentAdminEditMenuItemBinding;
 
 public class AdminEditMenuItemFragment extends Fragment {

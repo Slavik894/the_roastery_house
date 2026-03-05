@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:weightSum="10"
-    tools:context=".SpecialModeMainScreenActivity">
+    tools:context=".activities.SpecialModeMainScreenActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sp_mode_left_panel"

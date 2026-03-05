@@ -12,25 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheRoasteryHouse">
         <activity
-            android:name=".SpecialModeMainScreenActivity"
+            android:name=".activities.SpecialModeMainScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".SpecialModeWelcomeActivity"
+            android:name=".activities.SpecialModeWelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminModeMainScreenActivity"
+            android:name=".activities.AdminModeMainScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminModeStartActivity"
+            android:name=".activities.AdminModeStartActivity"
             android:exported="false" />
         <activity
-            android:name=".MainScreenActivity"
+            android:name=".activities.MainScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".SelectOrderTypeActivity"
+            android:name=".activities.SelectOrderTypeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

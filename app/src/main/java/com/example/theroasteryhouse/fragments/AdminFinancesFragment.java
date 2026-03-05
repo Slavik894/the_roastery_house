@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.theroasteryhouse.database.DatabaseHelper;
 import com.example.theroasteryhouse.databinding.FragmentAdminFinancesBinding;
 
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.database;
 
 import android.content.ContentValues;
 import android.content.Context;

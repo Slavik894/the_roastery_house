@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.theroasteryhouse.adapters.AdminMenuAdapter;
+import com.example.theroasteryhouse.R;
+import com.example.theroasteryhouse.database.DatabaseHelper;
 import com.example.theroasteryhouse.databinding.FragmentAdminMenuItemsBinding;
 import com.example.theroasteryhouse.models.MenuItem;
 import java.util.List;

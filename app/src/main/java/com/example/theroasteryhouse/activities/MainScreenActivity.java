@@ -1,13 +1,11 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.activities;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +16,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.example.theroasteryhouse.adapters.OrderAdapter;
+import com.example.theroasteryhouse.R;
+import com.example.theroasteryhouse.adapters.StandardMenuAdapter;
+import com.example.theroasteryhouse.database.DatabaseHelper;
 import com.example.theroasteryhouse.databinding.ActivityMainScreenBinding;
 import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
 import com.example.theroasteryhouse.databinding.FragmentSettingsBinding;

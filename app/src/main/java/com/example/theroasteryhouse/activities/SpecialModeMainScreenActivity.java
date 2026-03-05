@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +12,18 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.theroasteryhouse.adapters.OrderAdapter;
+import com.example.theroasteryhouse.R;
+import com.example.theroasteryhouse.fragments.SpecialModeCoffeeFragment;
+import com.example.theroasteryhouse.fragments.SpecialModeDessertsFragment;
+import com.example.theroasteryhouse.fragments.SpecialModeTeaFragment;
+import com.example.theroasteryhouse.database.DatabaseHelper;
 import com.example.theroasteryhouse.databinding.ActivitySpecialModeMainScreenBinding;
 import com.example.theroasteryhouse.models.Ingredient;
 import com.example.theroasteryhouse.models.MenuItem;
 import com.example.theroasteryhouse.models.OrderItem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

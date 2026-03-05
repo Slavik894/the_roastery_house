@@ -1,6 +1,5 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.adapters;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;

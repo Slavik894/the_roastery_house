@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+
+import com.example.theroasteryhouse.adapters.SpecialDessertsAdapter;
+import com.example.theroasteryhouse.activities.SpecialModeMainScreenActivity;
+import com.example.theroasteryhouse.database.DatabaseHelper;
 import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
 import com.example.theroasteryhouse.models.MenuItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpecialModeDessertsFragment extends Fragment {

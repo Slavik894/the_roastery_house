@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

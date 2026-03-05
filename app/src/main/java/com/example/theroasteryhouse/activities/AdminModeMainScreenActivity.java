@@ -1,4 +1,4 @@
-package com.example.theroasteryhouse;
+package com.example.theroasteryhouse.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.theroasteryhouse.fragments.AdminFinancesFragment;
+import com.example.theroasteryhouse.fragments.AdminIngredientsFragment;
+import com.example.theroasteryhouse.fragments.AdminMenuItemsFragment;
+import com.example.theroasteryhouse.adapters.AdminUsersAdapter;
+import com.example.theroasteryhouse.R;
+import com.example.theroasteryhouse.database.DatabaseHelper;
 import com.example.theroasteryhouse.databinding.ActivityAdminModeMainScreenBinding;
 import com.example.theroasteryhouse.databinding.FragmentAdminUserRegisterBinding;
 import com.example.theroasteryhouse.databinding.FragmentMenuBinding;
