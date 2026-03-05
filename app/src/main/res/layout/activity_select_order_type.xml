@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/functional_buttons_color"
-            android:text="Zamówinie\n specjalne"
+            android:text="Zamówienie\n specjalne"
             android:textColor="@color/functional_buttons_text_color"
             android:textSize="20sp"
             android:textAlignment="center"
