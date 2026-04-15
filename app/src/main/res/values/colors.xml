@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#1B1212</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main_background_color">#F3EACE</color>
     <color name="form_button_pressed_color">#3f4729</color>

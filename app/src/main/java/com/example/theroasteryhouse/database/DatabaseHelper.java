@@ -405,7 +405,8 @@ public List<User> getAllUsers() {
         List<com.example.theroasteryhouse.models.Ingredient> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_INGREDIENTS, null, COLUMN_INGREDIENT_TYPE + "=?", new String[]{type}, null, null, null);
+        Cursor cursor = db.query(TABLE_INGREDIENTS, null, COLUMN_INGREDIENT_TYPE + "=?", new String[]{type},
+                null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
