@@ -10,13 +10,13 @@ A native Android application designed to optimize the ordering process in coffee
 * **Role-Based Access Control:** Secure authentication and management for Administrators and Baristas.
 * **Dynamic Cost Calculation:** Real-time price updates based on selected components and modifiers.
 * **Robust Data Management:** Local persistence using SQLite with a "Snapshot" mechanism to preserve the state of orders at the moment of creation.
-* **Modern UI/UX:** Fully compliant with **Material Design 3 (Material You)**, featuring adaptive layouts for tablets and organic shapes for better accessibility.
+* **Modern UI/UX:** Fully compliant with **Material Design 3**, featuring adaptive layouts for tablets and organic shapes for better accessibility.
 
 ## Tech Stack
 
-* **Language:** Java (Native Android Development)
+* **Language:** Java
 * **IDE:** Android Studio
-* **Database:** SQLite (Relational local storage)
+* **Database:** SQLite
 * **UI/Layout:** XML with Material Design 3 components
 * **Background Processing:** WorkManager for asynchronous tasks and data synchronization
 * **Architecture:** Clean architecture principles with a focus on modularity and scalability
@@ -25,7 +25,7 @@ A native Android application designed to optimize the ordering process in coffee
 
 * **Asynchronous Operations:** Utilizing modern background task scheduling to ensure a smooth UI experience without blocking the main thread.
 * **Efficient Persistence:** Optimized database schema for handling complex, multi-component orders and user history.
-* **Responsiveness:** Specifically designed for large tablet screens (70/30 split-screen layout) to maximize information density and ergonomics.
+* **Responsiveness:** Specifically designed for large tablet screens to maximize information density and ergonomics.
 
 ## Getting Started
 
